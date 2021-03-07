@@ -25,7 +25,7 @@ namespace StoreMVC.Models
             {
                 CustomerName = customer2BCasted.CustomerName,
                 CustomerEmail = customer2BCasted.CustomerEmail,
-                //CustomerPasswordHash = customer2BCasted.CustomerPasswordHash
+                CustomerPasswordHash = null,
                 CustomerPhone = customer2BCasted.CustomerPhone,
                 CustomerAddress = customer2BCasted.CustomerAddress
             };
@@ -38,6 +38,30 @@ namespace StoreMVC.Models
                 CustomerEmail = customer.CustomerEmail,
                 CustomerPhone = customer.CustomerPhone,
                 CustomerAddress = customer.CustomerAddress
+            };
+        }
+        public CustomerEditVM cast2CustomerEditVM(Customer customer)
+        {
+            return new CustomerEditVM
+            {
+                CustomerName = customer.CustomerName,
+                CustomerEmail = customer.CustomerEmail,
+                //CustomerPasswordHash = customer.CustomerPasswordHash,
+                CustomerPhone = customer.CustomerPhone,
+                CustomerAddress = customer.CustomerAddress,
+                CustomerId = customer.Id
+            };
+        }
+        public Customer cast2Customer(CustomerEditVM customer2bCasted)
+        {
+            return new Customer
+            {
+                Id = customer2bCasted.CustomerId,
+                CustomerName = customer2bCasted.CustomerName,
+                CustomerEmail = customer2bCasted.CustomerEmail,
+                //CustomerPasswordHash = customer2bCasted.CustomerPasswordHash,
+                CustomerPhone = customer2bCasted.CustomerPhone,
+                CustomerAddress = customer2bCasted.CustomerAddress
             };
         }
     }

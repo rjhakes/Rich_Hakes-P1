@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using StoreModels;
+using System.ComponentModel;
 
 namespace StoreMVC.Models
 {
-    public class CustomerCRVM
+    public class CustomerEditVM
     {
         [DisplayName("Name")]
         [Required]
@@ -16,18 +19,11 @@ namespace StoreMVC.Models
         [Required]
         [EmailAddress]
         public string CustomerEmail { get; set; }
-        //[Category("Security")]
         /*[DisplayName("Password")]
-        [Required]
-        //[PasswordPropertyText(true)]
-        [DataType(DataType.Password)]
-        public string CustomerPasswordHash { get; set; }*/
-        /*[DisplayName("Confirm Password")]
-        [Required]
-        //[PasswordPropertyText(true)]
-        [DataType(DataType.Password)]
-        [Compare("CustomerPasswordHash")]
-        public string ConfirmPassword { get; set; }*/
+        [Required]*/
+        //[PasswordPropertyText]
+        //public string CustomerPasswordHash { get; set; }
+
         [DisplayName("Phone")]
         [Required]
         [Phone]
@@ -35,6 +31,8 @@ namespace StoreMVC.Models
         [DisplayName("Address")]
         [Required]
         public string CustomerAddress { get; set; }
+
+        public int CustomerId { get; set; }
 
     }
 }
