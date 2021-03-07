@@ -6,6 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Compact;
+using WebErrorLogging.Utilities;
 
 namespace StoreMVC.Controllers
 {
@@ -14,6 +18,7 @@ namespace StoreMVC.Controllers
 
         private ICustomerBL _customerBL;
         private IMapper _mapper;
+        
         public CustomerController(ICustomerBL customerBL, IMapper mapper)
         {
             _customerBL = customerBL;
@@ -51,11 +56,20 @@ namespace StoreMVC.Controllers
                 try
                 {
                     _customerBL.AddCustomer(_mapper.cast2Customer(newCustomer));
+                    //Helper.WriteInformation($"Customer created-- Email: {newCustomer.CustomerEmail}");
+                    Log.Information($"Customer created-- Email: {newCustomer.CustomerEmail}");
                     return RedirectToAction(nameof(Index));
                 }
-                catch
+                catch (Exception e)
                 {
+                    Helper.WriteError(e, "Error");
+                    Helper.WriteFatal(e, "Fatal");
+                    Helper.WriteVerbose(e, "Verbose");
                     return View();
+                }
+                finally
+                {
+
                 }
             }
             return View();
@@ -63,31 +77,52 @@ namespace StoreMVC.Controllers
         }
 
         // GET: CustomerController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string email)
         {
-            return View();
+            return View(_mapper.cast2CustomerEditVM(_customerBL.GetCustomerByEmail(email)));
         }
 
         // POST: CustomerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(CustomerEditVM customer2BUpdated)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _customerBL.UpdateCustomer(_mapper.cast2Customer(customer2BUpdated));
+                    Log.Information($"Customer updated-- Email: {customer2BUpdated.CustomerEmail}");
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception e)
+                {
+                    Helper.WriteError(e, "Error");
+                    Helper.WriteFatal(e, "Fatal");
+                    Helper.WriteVerbose(e, "Verbose");
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
+            
         }
 
         // GET: CustomerController/Delete
         public ActionResult Delete(string email)
         {
-            _customerBL.DeleteCustomer(_customerBL.GetCustomerByEmail(email));
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                _customerBL.DeleteCustomer(_customerBL.GetCustomerByEmail(email));
+                Log.Information($"Customer deleted-- Email: {email}");
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Helper.WriteError(e, "Error");
+                Helper.WriteFatal(e, "Fatal");
+                Helper.WriteVerbose(e, "Verbose");
+                return View();
+            }
         }
 
         // POST: CustomerController/Delete/5
@@ -99,8 +134,11 @@ namespace StoreMVC.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                Helper.WriteError(e, "Error");
+                Helper.WriteFatal(e, "Fatal");
+                Helper.WriteVerbose(e, "Verbose");
                 return View();
             }
         }
