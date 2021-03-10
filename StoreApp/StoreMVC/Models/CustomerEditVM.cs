@@ -21,7 +21,7 @@ namespace StoreMVC.Models
         public string CustomerEmail { get; set; }
         [DisplayName("Password")]
         [Required]
-        [PasswordPropertyText]
+        [DataType(DataType.Password)]
         public string CustomerPasswordHash { get; set; }
 
         [DisplayName("Phone")]
