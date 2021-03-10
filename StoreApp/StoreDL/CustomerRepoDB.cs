@@ -44,6 +44,8 @@ namespace StoreDL
         public Customer UpdateCustomer(Customer customer2BUpdated)
         {
             Customer oldCustomer = _context.Customers.Find(customer2BUpdated.Id);
+            
+
             _context.Entry(oldCustomer).CurrentValues.SetValues(customer2BUpdated);
 
             _context.SaveChanges();
@@ -51,6 +53,7 @@ namespace StoreDL
             //This method clears the change tracker to drop all tracked entities
             _context.ChangeTracker.Clear();
             return customer2BUpdated;
+
         }
     }
 }
