@@ -9,9 +9,9 @@ namespace StoreMVC.Models
 {
     public class LoginVM
     {
-        [DisplayName("Name")]
+        [DisplayName("Email")]
         [Required]
-        public string UserName { get; set; }
+        public string email { get; set; }
 
         [DisplayName("Password")]
         [Required]

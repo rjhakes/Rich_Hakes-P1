@@ -150,5 +150,30 @@ namespace StoreMVC.Controllers
                 return View();
             }
         }
+
+        public ActionResult Login()
+        {
+            return View("Login");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginVM customerLogin)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customerLogin.email).CustomerPasswordHash, customerLogin.Password))
+                    {
+                        return View("Details", _mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(customerLogin.email)));
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            return View();
+        }
     }
 }
