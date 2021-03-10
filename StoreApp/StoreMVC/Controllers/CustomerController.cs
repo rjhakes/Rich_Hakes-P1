@@ -91,9 +91,17 @@ namespace StoreMVC.Controllers
             {
                 try
                 {
-                    _customerBL.UpdateCustomer(_mapper.cast2Customer(customer2BUpdated));
-                    Log.Information($"Customer updated-- Email: {customer2BUpdated.CustomerEmail}");
-                    return RedirectToAction(nameof(Index));
+                    if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customer2BUpdated.CustomerEmail).CustomerPasswordHash, customer2BUpdated.CustomerPasswordHash))
+                    {
+                        _customerBL.UpdateCustomer(_mapper.cast2Customer(customer2BUpdated));
+                        Log.Information($"Customer updated-- Email: {customer2BUpdated.CustomerEmail}");
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        Log.Information($"Customer not updated; incorrect password-- Email: {customer2BUpdated.CustomerEmail}");
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 catch (Exception e)
                 {

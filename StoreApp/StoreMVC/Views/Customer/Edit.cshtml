@@ -22,11 +22,12 @@
                 <input asp-for="CustomerEmail" class="form-control" />
                 <span asp-validation-for="CustomerEmail" class="text-danger"></span>
             </div>
-            @*<div class="form-group" type="hidden">
-            <label asp-for="CustomerPasswordHash" class="control-label"></label>
-            <input asp-for="CustomerPasswordHash" class="form-control" />
-            <span asp-validation-for="CustomerPasswordHash" class="text-danger"></span>
-        </div>*@
+            <div class="form-group" type="hidden">
+                <label asp-for="CustomerPasswordHash" class="control-label"></label>
+                <input asp-for="CustomerPasswordHash" class="form-control" />
+                <span asp-validation-for="CustomerPasswordHash" class="text-danger"></span>
+                <label asp-for="CustomerPasswordHash" class="control-label">Must match account password</label>
+            </div>
             <div class="form-group">
                 <label asp-for="CustomerPhone" class="control-label"></label>
                 <input asp-for="CustomerPhone" class="form-control" />

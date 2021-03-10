@@ -19,10 +19,10 @@ namespace StoreMVC.Models
         [Required]
         [EmailAddress]
         public string CustomerEmail { get; set; }
-        /*[DisplayName("Password")]
-        [Required]*/
-        //[PasswordPropertyText]
-        //public string CustomerPasswordHash { get; set; }
+        [DisplayName("Password")]
+        [Required]
+        [PasswordPropertyText]
+        public string CustomerPasswordHash { get; set; }
 
         [DisplayName("Phone")]
         [Required]

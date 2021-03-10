@@ -9,5 +9,6 @@ namespace StoreMVC.Models
         CustomerCRVM cast2CustomerCRVM(Customer customer);
         CustomerEditVM cast2CustomerEditVM(Customer customer);
         Customer cast2Customer(CustomerEditVM customer2bCasted);
+        bool verifyPW(string pwHash, string newPW);
     }
 }

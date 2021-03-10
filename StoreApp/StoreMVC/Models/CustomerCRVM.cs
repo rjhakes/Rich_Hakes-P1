@@ -16,12 +16,12 @@ namespace StoreMVC.Models
         [Required]
         [EmailAddress]
         public string CustomerEmail { get; set; }
-        //[Category("Security")]
-        /*[DisplayName("Password")]
+         [Category("Security")]
+        [DisplayName("Password")]
         [Required]
         //[PasswordPropertyText(true)]
         [DataType(DataType.Password)]
-        public string CustomerPasswordHash { get; set; }*/
+        public string CustomerPasswordHash { get; set; }
         /*[DisplayName("Confirm Password")]
         [Required]
         //[PasswordPropertyText(true)]

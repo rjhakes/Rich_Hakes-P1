@@ -1,4 +1,5 @@
-﻿using StoreModels;
+﻿using StoreBL;
+using StoreModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace StoreMVC.Models
             {
                 CustomerName = customer2BCasted.CustomerName,
                 CustomerEmail = customer2BCasted.CustomerEmail,
-                CustomerPasswordHash = null,
+                CustomerPasswordHash = Convert.ToBase64String(new StoreBL.PasswordHash(customer2BCasted.CustomerPasswordHash).ToArray()),
                 CustomerPhone = customer2BCasted.CustomerPhone,
                 CustomerAddress = customer2BCasted.CustomerAddress
             };
@@ -46,23 +47,32 @@ namespace StoreMVC.Models
             {
                 CustomerName = customer.CustomerName,
                 CustomerEmail = customer.CustomerEmail,
-                //CustomerPasswordHash = customer.CustomerPasswordHash,
+                CustomerPasswordHash = "",
                 CustomerPhone = customer.CustomerPhone,
                 CustomerAddress = customer.CustomerAddress,
                 CustomerId = customer.Id
             };
         }
-        public Customer cast2Customer(CustomerEditVM customer2bCasted)
+        public Customer cast2Customer(CustomerEditVM customer2BCasted)
         {
+
             return new Customer
             {
-                Id = customer2bCasted.CustomerId,
-                CustomerName = customer2bCasted.CustomerName,
-                CustomerEmail = customer2bCasted.CustomerEmail,
-                //CustomerPasswordHash = customer2bCasted.CustomerPasswordHash,
-                CustomerPhone = customer2bCasted.CustomerPhone,
-                CustomerAddress = customer2bCasted.CustomerAddress
+                Id = customer2BCasted.CustomerId,
+                CustomerName = customer2BCasted.CustomerName,
+                CustomerEmail = customer2BCasted.CustomerEmail,
+                CustomerPasswordHash = Convert.ToBase64String(new StoreBL.PasswordHash(customer2BCasted.CustomerPasswordHash).ToArray()),
+                CustomerPhone = customer2BCasted.CustomerPhone,
+                CustomerAddress = customer2BCasted.CustomerAddress
             };
+        }
+
+        public bool verifyPW(string pwHash, string newPW)
+        {
+            byte[] hashBytes = Convert.FromBase64String(pwHash);
+            PasswordHash customerPasswordHash = new PasswordHash(hashBytes);
+            //Customer _customer = _customerBL.GetCustomerByEmail(userEmail);
+            return customerPasswordHash.Verify(newPW);
         }
     }
 }
