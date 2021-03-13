@@ -10,6 +10,6 @@ namespace StoreDL
         Location GetLocationByName(string name);
         Location GetLocationById(int id);
         Location DeleteLocation(Location location2BDeleted);
-        void UpdateLocation(Location location2BUpdated);
+        Location UpdateLocation(Location location2BUpdated);
     }
 }

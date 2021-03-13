@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 
 namespace StoreMVC.Models
 {
-    public class LocIndexVM
+    public class ManagerIndexVM
     {
         [DisplayName("Name")]
         [Required]
-        public string LocName { get; set; }
-        [DisplayName("Address")]
+        public string ManagerName { get; set; }
+        [DisplayName("Email")]
         [Required]
-        public string LocAddress { get; set; }
+        [EmailAddress]
+        public string ManagerEmail { get; set; }
         [DisplayName("Phone")]
         [Required]
         [Phone]
-        public string LocPhone { get; set; }
+        public string ManagerPhone { get; set; }
+        [DisplayName("Location ID")]
+        [Required]
+        public int ManagerLocId { get; set; }
     }
 }

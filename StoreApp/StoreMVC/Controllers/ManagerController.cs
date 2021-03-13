@@ -14,59 +14,53 @@ using StoreModels;
 
 namespace StoreMVC.Controllers
 {
-    public class CustomerController : Controller
+    public class ManagerController : Controller
     {
-
-        private ICustomerBL _customerBL;
+        private IManagerBL _managerBL;
         private IMapper _mapper;
-        
-        public CustomerController(ICustomerBL customerBL, IMapper mapper)
+
+        public ManagerController(IManagerBL managerBL, IMapper mapper)
         {
-            _customerBL = customerBL;
+            _managerBL = managerBL;
             _mapper = mapper;
         }
-        
-        // GET: CustomerController
+        // GET: ManagerController
         public ActionResult Index()
         {
-            //add view Index after migrating DB 
-            return View(_customerBL.GetCustomers().Select(x => _mapper.cast2CustomerIndexVM(x)).ToList());
+            return View(_managerBL.GetManagers().Select(x => _mapper.cast2ManagerIndexVM(x)).ToList());
         }
 
-        // GET: CustomerController/Details?email={customerEmail}
+        // GET: ManagerController/Details/5
         public ActionResult Details(string email)
         {
-            //add view Details
             if (email == null)
             {
-                return View(_mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail"))));
+                return View(_mapper.cast2ManagerCRVM(_managerBL.GetManagerByEmail(HttpContext.Session.GetString("ManagerEmail"))));
             }
             else
             {
-                return View(_mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(email)));
+                return View(_mapper.cast2ManagerCRVM(_managerBL.GetManagerByEmail(email)));
             }
-            
         }
 
-        // GET: CustomerController/Create
+        // GET: ManagerController/Create
         public ActionResult Create()
         {
-            //add view CreateCustomer
-            return View("CreateCustomer");
+            return View();
         }
 
-        // POST: CustomerController/Create
+        // POST: ManagerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CustomerCRVM newCustomer)
+        public ActionResult Create(ManagerCRVM newManager)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _customerBL.AddCustomer(_mapper.cast2Customer(newCustomer));
-                    //Helper.WriteInformation($"Customer created-- Email: {newCustomer.CustomerEmail}");
-                    Log.Information($"Customer created-- Email: {newCustomer.CustomerEmail}");
+                    _managerBL.AddManager(_mapper.cast2Manager(newManager));
+                    //Helper.WriteInformation($"manager created-- Email: {newmanager.managerEmail}");
+                    Log.Information($"Manager created-- Email: {newManager.ManagerEmail}");
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception e)
@@ -82,33 +76,32 @@ namespace StoreMVC.Controllers
                 }
             }
             return View();
-            
         }
 
-        // GET: CustomerController/Edit/5
+        // GET: ManagerController/Edit/5
         public ActionResult Edit(string email)
         {
-            return View(_mapper.cast2CustomerEditVM(_customerBL.GetCustomerByEmail(email)));
+            return View(_mapper.cast2ManagerEditVM(_managerBL.GetManagerByEmail(email)));
         }
 
-        // POST: CustomerController/Edit/5
+        // POST: ManagerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CustomerEditVM customer2BUpdated)
+        public ActionResult Edit(ManagerEditVM manager2BUpdated)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customer2BUpdated.CustomerEmail).CustomerPasswordHash, customer2BUpdated.CustomerPasswordHash))
+                    if (_mapper.verifyPW(_managerBL.GetManagerByEmail(manager2BUpdated.ManagerEmail).ManagerPasswordHash, manager2BUpdated.ManagerPasswordHash))
                     {
-                        _customerBL.UpdateCustomer(_mapper.cast2Customer(customer2BUpdated));
-                        Log.Information($"Customer updated-- Email: {customer2BUpdated.CustomerEmail}");
+                        _managerBL.UpdateManager(_mapper.cast2Manager(manager2BUpdated));
+                        Log.Information($"Manager updated-- Email: {manager2BUpdated.ManagerEmail}");
                         return RedirectToAction(nameof(Index));
                     }
                     else
                     {
-                        Log.Information($"Customer not updated; incorrect password-- Email: {customer2BUpdated.CustomerEmail}");
+                        Log.Information($"Manager not updated; incorrect password-- Email: {manager2BUpdated.ManagerEmail}");
                         return RedirectToAction(nameof(Index));
                     }
                 }
@@ -121,16 +114,15 @@ namespace StoreMVC.Controllers
                 }
             }
             return View();
-            
         }
 
-        // GET: CustomerController/Delete
+        // GET: ManagerController/Delete/5
         public ActionResult Delete(string email)
         {
             try
             {
-                _customerBL.DeleteCustomer(_customerBL.GetCustomerByEmail(email));
-                Log.Information($"Customer deleted-- Email: {email}");
+                _managerBL.DeleteManager(_managerBL.GetManagerByEmail(email));
+                Log.Information($"Manager deleted-- Email: {email}");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
@@ -142,7 +134,7 @@ namespace StoreMVC.Controllers
             }
         }
 
-        // POST: CustomerController/Delete/5
+        // POST: ManagerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -166,24 +158,24 @@ namespace StoreMVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginVM customerLogin)
+        public ActionResult Login(LoginVM managerLogin)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Customer user = _customerBL.GetCustomerByEmail(customerLogin.email);
+                    Manager user = _managerBL.GetManagerByEmail(managerLogin.email);
                     if (user == null)
                     {
                         return NotFound();
                     }
-                    else if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customerLogin.email).CustomerPasswordHash, customerLogin.Password))
+                    else if (_mapper.verifyPW(_managerBL.GetManagerByEmail(managerLogin.email).ManagerPasswordHash, managerLogin.Password))
                     {
-                        //return View("Details", _mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(customerLogin.email)));
-                        HttpContext.Session.SetString("UserName", user.CustomerName);
-                        HttpContext.Session.SetString("UserEmail", user.CustomerEmail);
+                        //return View("Details", _mapper.cast2ManagerCRVM(_managerBL.GetManagerByEmail(managerLogin.email)));
+                        HttpContext.Session.SetString("UserName", user.ManagerName);
+                        HttpContext.Session.SetString("UserEmail", user.ManagerEmail);
                         HttpContext.Session.SetInt32("UserId", user.Id);
-                        HttpContext.Session.SetString("boolManager", "False");
+                        HttpContext.Session.SetString("boolManager", "True");
                         return Redirect("/");
                     }
                 }

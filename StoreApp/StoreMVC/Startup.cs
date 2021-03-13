@@ -40,6 +40,10 @@ namespace StoreMVC
             services.AddDbContext<StoreDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StoreDB")));
             services.AddScoped<ICustomerRepository, CustomerRepoDB>();
             services.AddScoped<ICustomerBL, CustomerBL>();
+            services.AddScoped<IManagerRepository, ManagerRepoDB>();
+            services.AddScoped<IManagerBL, ManagerBL>();
+            services.AddScoped<ILocationRepository, LocationRepoDB>();
+            services.AddScoped<ILocationBL, LocationBL>();
             services.AddScoped<IMapper, Mapper>();
         }
 

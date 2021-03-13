@@ -13,14 +13,14 @@ namespace StoreBL
             _repo = repo;
         }
 
-        public void AddLocation(Location newLocation)
+        public Location AddLocation(Location newLocation)
         {
             //TODO: Add BL
-            _repo.AddLocation(newLocation);
+            return _repo.AddLocation(newLocation);
         }
-        public void DeleteLocation(Location location2BDeleted)
+        public Location DeleteLocation(Location location2BDeleted)
         {
-            _repo.DeleteLocation(location2BDeleted);
+            return _repo.DeleteLocation(location2BDeleted);
         }
         public Location GetLocationByName(string name) {
             //todo validate
@@ -35,13 +35,9 @@ namespace StoreBL
             //TODO Add BL
             return _repo.GetLocations();
         }
-        public void UpdateLocation(Location location2BUpdated, Location updatedDetails)
+        public Location UpdateLocation(Location location2BUpdated)
         {
-            location2BUpdated.LocName = updatedDetails.LocName;
-            location2BUpdated.LocPhone = updatedDetails.LocPhone;
-            location2BUpdated.LocAddress = updatedDetails.LocAddress;
-
-            _repo.UpdateLocation(location2BUpdated);
+            return _repo.UpdateLocation(location2BUpdated);
         }
     }
 }

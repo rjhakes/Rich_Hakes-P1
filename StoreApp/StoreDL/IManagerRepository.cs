@@ -6,8 +6,8 @@ namespace StoreDL
     {
          List<Manager> GetManagers();
          Manager AddManager(Manager newManager);
-         Manager GetManagerByEmail(string name);
+         Manager GetManagerByEmail(string email);
         Manager DeleteManager(Manager manager2BDeleted);
-        void UpdateManager(Manager manager2BUpdated);
+        Manager UpdateManager(Manager manager2BUpdated);
     }
 }

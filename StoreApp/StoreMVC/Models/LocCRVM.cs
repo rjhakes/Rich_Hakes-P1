@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StoreMVC.Models
 {
-    public class LocIndexVM
+    public class LocCRVM
     {
         [DisplayName("Name")]
         [Required]

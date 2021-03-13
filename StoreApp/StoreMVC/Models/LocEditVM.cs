@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StoreMVC.Models
 {
-    public class LocIndexVM
+    public class LocEditVM
     {
         [DisplayName("Name")]
         [Required]
@@ -19,5 +19,7 @@ namespace StoreMVC.Models
         [Required]
         [Phone]
         public string LocPhone { get; set; }
+        [DisplayName("Locaiton ID")]
+        public int LocId { get; set; }
     }
 }
