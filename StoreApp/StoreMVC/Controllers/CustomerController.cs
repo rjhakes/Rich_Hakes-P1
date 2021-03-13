@@ -10,6 +10,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 using WebErrorLogging.Utilities;
+using StoreModels;
 
 namespace StoreMVC.Controllers
 {
@@ -36,7 +37,15 @@ namespace StoreMVC.Controllers
         public ActionResult Details(string email)
         {
             //add view Details
-            return View(_mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(email)));
+            if (email == null)
+            {
+                return View(_mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail"))));
+            }
+            else
+            {
+                return View(_mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(email)));
+            }
+            
         }
 
         // GET: CustomerController/Create
@@ -163,9 +172,18 @@ namespace StoreMVC.Controllers
             {
                 try
                 {
-                    if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customerLogin.email).CustomerPasswordHash, customerLogin.Password))
+                    Customer user = _customerBL.GetCustomerByEmail(customerLogin.email);
+                    if (user == null)
                     {
-                        return View("Details", _mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(customerLogin.email)));
+                        return NotFound();
+                    }
+                    else if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customerLogin.email).CustomerPasswordHash, customerLogin.Password))
+                    {
+                        //return View("Details", _mapper.cast2CustomerCRVM(_customerBL.GetCustomerByEmail(customerLogin.email)));
+                        HttpContext.Session.SetString("UserName", user.CustomerName);
+                        HttpContext.Session.SetString("UserEmail", user.CustomerEmail);
+                        HttpContext.Session.SetInt32("UserId", user.Id);
+                        return Redirect("/");
                     }
                 }
                 catch
@@ -174,6 +192,14 @@ namespace StoreMVC.Controllers
                 }
             }
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove("UserEmail");
+            HttpContext.Session.Remove("UserId");
+            return RedirectToAction("Login");
         }
     }
 }
