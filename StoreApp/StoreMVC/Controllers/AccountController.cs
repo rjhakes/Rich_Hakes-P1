@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StoreBL;
+using StoreMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +11,46 @@ namespace StoreMVC.Controllers
 {
     public class AccountController : Controller
     {
+
+        private ICustomerBL _customerBL;
+        private IMapper _mapper;
+
+        public AccountController(ICustomerBL customerBL, IMapper mapper)
+        {
+            _customerBL = customerBL;
+            _mapper = mapper;
+        }
         // GET: AccountController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: AccountController/Details/5
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginVM customerLogin)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customerLogin.email).CustomerPasswordHash, customerLogin.Password))
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            return View();
+        }
+            // GET: AccountController/Details/5
         public ActionResult Details(int id)
         {
             return View();
@@ -83,5 +118,6 @@ namespace StoreMVC.Controllers
                 return View();
             }
         }
+
     }
 }
