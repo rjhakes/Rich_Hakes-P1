@@ -10,6 +10,6 @@ namespace StoreDL
         Product GetProductByName(string name);
         Product GetProductById(int id);
         Product DeleteProduct(Product product2BDeleted);
-        void UpdateProduct(Product product2BUpdated);
+        Product UpdateProduct(Product product2BUpdated);
     }
 }

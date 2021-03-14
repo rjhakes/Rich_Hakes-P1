@@ -20,5 +20,10 @@ namespace StoreMVC.Models
         LocCRVM cast2LocationCRVM(Location location);
         LocEditVM cast2LocationEditVM(Location location);
         Location cast2Location(LocEditVM location2bCasted);
+        Product cast2Product(ProductCRVM product2BCasted);
+        ProductIndexVM cast2ProductIndexVM(Product product2BCasted);
+        ProductCRVM cast2ProductCRVM(Product product);
+        ProductEditVM cast2ProductEditVM(Product product);
+        Product cast2Product(ProductEditVM product2bCasted);
     }
 }

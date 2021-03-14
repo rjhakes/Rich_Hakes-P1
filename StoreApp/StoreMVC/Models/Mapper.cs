@@ -186,5 +186,68 @@ namespace StoreMVC.Models
                 LocPhone = location2BCasted.LocPhone,
             };
         }
+
+        public Product cast2Product(ProductCRVM product2BCasted)
+        {
+            return new Product
+            {
+                ProdName = product2BCasted.ProdName,
+                ProdPrice = product2BCasted.ProdPrice,
+                ProdCategory = product2BCasted.ProdCategory,
+                ProdBrandName = product2BCasted.ProdBrandName,
+                Description = product2BCasted.Description,
+            };
+        }
+
+        public ProductIndexVM cast2ProductIndexVM(Product product2BCasted)
+        {
+            return new ProductIndexVM
+            {
+                ProdName = product2BCasted.ProdName,
+                ProdPrice = product2BCasted.ProdPrice,
+                ProdCategory = product2BCasted.ProdCategory,
+                ProdBrandName = product2BCasted.ProdBrandName,
+                Description = product2BCasted.Description,
+                Id = product2BCasted.Id
+            };
+        }
+
+        public ProductCRVM cast2ProductCRVM(Product product)
+        {
+            return new ProductCRVM
+            {
+                ProdName = product.ProdName,
+                ProdPrice = product.ProdPrice,
+                ProdCategory = product.ProdCategory,
+                ProdBrandName = product.ProdBrandName,
+                Description = product.Description,
+            };
+        }
+
+        public ProductEditVM cast2ProductEditVM(Product product)
+        {
+            return new ProductEditVM
+            {
+                ProdName = product.ProdName,
+                ProdPrice = product.ProdPrice,
+                ProdCategory = product.ProdCategory,
+                ProdBrandName = product.ProdBrandName,
+                Description = product.Description,
+                ProdId = product.Id
+            };
+        }
+
+        public Product cast2Product(ProductEditVM product2BCasted)
+        {
+            return new Product
+            {
+                Id = product2BCasted.ProdId,
+                ProdName = product2BCasted.ProdName,
+                ProdPrice = product2BCasted.ProdPrice,
+                ProdCategory = product2BCasted.ProdCategory,
+                ProdBrandName = product2BCasted.ProdBrandName,
+                Description = product2BCasted.Description,
+            };
+        }
     }
 }
