@@ -175,7 +175,7 @@ namespace StoreMVC.Controllers
                     Customer user = _customerBL.GetCustomerByEmail(customerLogin.email);
                     if (user == null)
                     {
-                        return NotFound();
+                        return RedirectToAction("Login");
                     }
                     else if (_mapper.verifyPW(_customerBL.GetCustomerByEmail(customerLogin.email).CustomerPasswordHash, customerLogin.Password))
                     {
@@ -185,6 +185,10 @@ namespace StoreMVC.Controllers
                         HttpContext.Session.SetInt32("UserId", user.Id);
                         HttpContext.Session.SetString("boolManager", "False");
                         return Redirect("/");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login");
                     }
                 }
                 catch
@@ -201,7 +205,7 @@ namespace StoreMVC.Controllers
             HttpContext.Session.Remove("UserEmail");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("boolManager");
-            return RedirectToAction("Login");
+            return Redirect("/");
         }
     }
 }

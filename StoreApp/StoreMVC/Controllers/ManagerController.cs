@@ -35,7 +35,7 @@ namespace StoreMVC.Controllers
         {
             if (email == null)
             {
-                return View(_mapper.cast2ManagerCRVM(_managerBL.GetManagerByEmail(HttpContext.Session.GetString("ManagerEmail"))));
+                return View(_mapper.cast2ManagerCRVM(_managerBL.GetManagerByEmail(HttpContext.Session.GetString("UserEmail"))));
             }
             else
             {
@@ -167,7 +167,7 @@ namespace StoreMVC.Controllers
                     Manager user = _managerBL.GetManagerByEmail(managerLogin.email);
                     if (user == null)
                     {
-                        return NotFound();
+                        return RedirectToAction("Login");
                     }
                     else if (_mapper.verifyPW(_managerBL.GetManagerByEmail(managerLogin.email).ManagerPasswordHash, managerLogin.Password))
                     {
@@ -177,6 +177,10 @@ namespace StoreMVC.Controllers
                         HttpContext.Session.SetInt32("UserId", user.Id);
                         HttpContext.Session.SetString("boolManager", "True");
                         return Redirect("/");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login");
                     }
                 }
                 catch
@@ -193,7 +197,7 @@ namespace StoreMVC.Controllers
             HttpContext.Session.Remove("UserEmail");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("boolManager");
-            return RedirectToAction("Login");
+            return Redirect("/");
         }
     }
 }
