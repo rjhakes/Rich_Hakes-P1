@@ -6,9 +6,9 @@ namespace StoreBL
     public interface IInventoryLineItemBL
     {
         List<InventoryLineItem> GetInventoryLineItems();
-        void AddInventoryLineItem(InventoryLineItem newInventoryLineItem);
+        InventoryLineItem AddInventoryLineItem(InventoryLineItem newInventoryLineItem);
         InventoryLineItem GetInventoryLineItemById(int invId, int prodId);
-        void DeleteInventoryLineItem(InventoryLineItem inventoryLineItem2BDeleted);
-        void UpdateInventoryLineItem(InventoryLineItem inventoryLineItem2BUpdated, InventoryLineItem updatedDetails);
+        InventoryLineItem DeleteInventoryLineItem(InventoryLineItem inventoryLineItem2BDeleted);
+        InventoryLineItem UpdateInventoryLineItem(InventoryLineItem inventoryLineItem2BUpdated);
     }
 }

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Locations</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -37,6 +37,7 @@
                 @Html.DisplayFor(modelItem => item.LocPhone)
             </td>
             <td>
+                @Html.ActionLink("Inventory", "Index", "InventoryLineItem", new { name = item.LocName }) |
                 @Html.ActionLink("Edit", "Edit", new { name = item.LocName }) |
                 @Html.ActionLink("Details", "Details", new { name = item.LocName }) |
                 @Html.ActionLink("Delete", "Delete", new { name = item.LocName })

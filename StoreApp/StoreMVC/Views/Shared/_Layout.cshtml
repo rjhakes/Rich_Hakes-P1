@@ -39,6 +39,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">|Product Table|</a>
                             </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="InventoryLineItem" asp-action="Index">|Inventory Table|</a>
+                            </li>*@
                         }
                         else if (Context.Session.GetString("boolManager") == "False")
                         {

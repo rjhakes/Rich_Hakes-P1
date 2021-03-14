@@ -13,14 +13,14 @@ namespace StoreBL
             _repo = repo;
         }
 
-        public void AddInventoryLineItem(InventoryLineItem newInventoryLineItem)
+        public InventoryLineItem AddInventoryLineItem(InventoryLineItem newInventoryLineItem)
         {
             //TODO: Add BL
-            _repo.AddInventoryLineItem(newInventoryLineItem);
+            return _repo.AddInventoryLineItem(newInventoryLineItem);
         }
-        public void DeleteInventoryLineItem(InventoryLineItem inventoryLineItem2BDeleted)
+        public InventoryLineItem DeleteInventoryLineItem(InventoryLineItem inventoryLineItem2BDeleted)
         {
-            _repo.DeleteInventoryLineItem(inventoryLineItem2BDeleted);
+            return _repo.DeleteInventoryLineItem(inventoryLineItem2BDeleted);
         }
         public InventoryLineItem GetInventoryLineItemById(int invId, int prodId) {
             //todo validate
@@ -31,12 +31,9 @@ namespace StoreBL
             //TODO Add BL
             return _repo.GetInventoryLineItems();
         }
-        public void UpdateInventoryLineItem(InventoryLineItem inventoryLineItem2BUpdated, InventoryLineItem updatedDetails)
+        public InventoryLineItem UpdateInventoryLineItem(InventoryLineItem inventoryLineItem2BUpdated)
         {
-            inventoryLineItem2BUpdated.InventoryId = updatedDetails.InventoryId;
-            inventoryLineItem2BUpdated.ProductId = updatedDetails.ProductId;
-            inventoryLineItem2BUpdated.Quantity = updatedDetails.Quantity;
-            _repo.UpdateInventoryLineItem(inventoryLineItem2BUpdated);
+            return _repo.UpdateInventoryLineItem(inventoryLineItem2BUpdated);
         }
 
         

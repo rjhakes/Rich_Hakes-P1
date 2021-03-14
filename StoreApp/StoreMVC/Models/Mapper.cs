@@ -249,5 +249,46 @@ namespace StoreMVC.Models
                 Description = product2BCasted.Description,
             };
         }
+
+        public InventoryLineItem cast2InventoryLineItem(InvLineItemCRVM inventoryLineItem2BCasted)
+        {
+            return new InventoryLineItem
+            {
+                ProductId = inventoryLineItem2BCasted.ProductId,
+                Quantity = inventoryLineItem2BCasted.Quantity,
+            };
+        }
+
+        public InvLineItemIndexVM cast2InventoryLineItemIndexVM(InventoryLineItem inventoryLineItem2BCasted, Product product)
+        {
+            return new InvLineItemIndexVM
+            {
+                ProductId = inventoryLineItem2BCasted.ProductId,
+                ProdName = product.ProdName,
+                ProdPrice = product.ProdPrice,
+                ProdBrandName = product.ProdBrandName,
+                Quantity = inventoryLineItem2BCasted.Quantity,
+                //Id = inventoryLineItem2BCasted.Id
+            };
+        }
+
+        public InvLineItemCRVM cast2InventoryLineItemCRVM(InventoryLineItem inventoryLineItem)
+        {
+            return new InvLineItemCRVM
+            {
+                ProductId = inventoryLineItem.ProductId,
+                Quantity = inventoryLineItem.Quantity,
+            };
+        }
+
+        public InvLineItemEditVM cast2InventoryLineItemEditVM(InventoryLineItem inventoryLineItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public InventoryLineItem cast2InventoryLineItem(InvLineItemEditVM inventoryLineItem2BCasted)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
