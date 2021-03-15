@@ -26,6 +26,11 @@ namespace StoreBL
             //todo validate
             return _repo.GetInventoryLineItemById(invId, prodId);
         }
+        public InventoryLineItem GetInventoryLineItemById(int invId)
+        {
+            //todo validate
+            return _repo.GetInventoryLineItemById(invId);
+        }
         public List<InventoryLineItem> GetInventoryLineItems()
         {
             //TODO Add BL

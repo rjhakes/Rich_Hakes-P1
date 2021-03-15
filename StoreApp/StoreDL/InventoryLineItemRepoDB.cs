@@ -32,6 +32,12 @@ namespace StoreDL
                 .FirstOrDefault(x => x.InventoryId == invId && x.ProductId == prodId);
         }
 
+        public InventoryLineItem GetInventoryLineItemById(int invId)
+        {
+            return _context.InventoryLineItems
+                .FirstOrDefault(x => x.Id == invId);
+        }
+
         public List<InventoryLineItem> GetInventoryLineItems()
         {
             return _context.InventoryLineItems

@@ -12,6 +12,9 @@ namespace StoreMVC.Models
         /*[DisplayName("Location")]
         [Required]
         public string LocName { get; set; }*/
+        [DisplayName("Location Id")]
+        [Required]
+        public int InventoryId { get; set; }
         [DisplayName("Product Id")]
         [Required]
         public int ProductId { get; set; }
@@ -20,6 +23,7 @@ namespace StoreMVC.Models
         public string ProdName{ get; set; }
         [DisplayName("Price")]
         [Required]
+        [DataType(DataType.Currency)]
         public double ProdPrice{ get; set; }
         [DisplayName("Brand")]
         [Required]
@@ -27,5 +31,7 @@ namespace StoreMVC.Models
         [DisplayName("Quantity")]
         [Required]
         public int Quantity { get; set; }
+
+        public int Id { get; set; }
     }
 }

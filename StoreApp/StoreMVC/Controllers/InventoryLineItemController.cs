@@ -26,9 +26,13 @@ namespace StoreMVC.Controllers
             _mapper = mapper;
         }
         // GET: InventoryController
-        public ActionResult Index()
+        public ActionResult Index(int locId)
         {
-            return View(_inventoryLineItemBL.GetInventoryLineItems().Select(x => _mapper.cast2InventoryLineItemIndexVM(x, _productBL.GetProductById(x.ProductId))).ToList());
+            return View(_inventoryLineItemBL.GetInventoryLineItems()
+                .Where(x => x.InventoryId == locId)
+                .Select(x => _mapper.cast2InventoryLineItemIndexVM(x, _productBL.GetProductById(x.ProductId)))
+                .OrderBy(x => x.ProductId)
+                .ToList());
         }
 
         // GET: InventoryController/Details/5
@@ -55,7 +59,7 @@ namespace StoreMVC.Controllers
                     _inventoryLineItemBL.AddInventoryLineItem(_mapper.cast2InventoryLineItem(newInventoryLineItem));
                     //Helper.WriteInformation($"InventoryLineItem created-- Email: {newInventoryLineItem.InventoryLineItemEmail}");
                     //Log.Information($"InventoryLineItem created-- Email: {newInventoryLineItem.InventoryLineItemEmail}");
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", new { locId = newInventoryLineItem.InventoryId });
                 }
                 catch (Exception e)
                 {
@@ -75,28 +79,51 @@ namespace StoreMVC.Controllers
         // GET: InventoryController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            //return View();
+            return View(_mapper
+                .cast2InventoryLineItemEditVM(_inventoryLineItemBL.GetInventoryLineItemById(id), _productBL.GetProductById(_inventoryLineItemBL.GetInventoryLineItemById(id).ProductId)));
         }
 
         // POST: InventoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(InvLineItemEditVM inventoryLineItem2BUpdated)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _inventoryLineItemBL.UpdateInventoryLineItem(_mapper.cast2InventoryLineItem(inventoryLineItem2BUpdated));
+                    Log.Information($"InventoryLineItem updated-- Id: {inventoryLineItem2BUpdated.Id}");
+                    return RedirectToAction("Index", new { locId = inventoryLineItem2BUpdated.InventoryId });
+                }
+                catch (Exception e)
+                {
+                    Helper.WriteError(e, "Error");
+                    Helper.WriteFatal(e, "Fatal");
+                    Helper.WriteVerbose(e, "Verbose");
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: InventoryController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int invId, int prodId)
         {
-            return View();
+            try
+            {
+                _inventoryLineItemBL.DeleteInventoryLineItem(_inventoryLineItemBL.GetInventoryLineItemById(invId, prodId));
+                Log.Information($"Inventory Item deleted--");
+                return RedirectToAction("Index", new { locId = invId });
+            }
+            catch (Exception e)
+            {
+                Helper.WriteError(e, "Error");
+                Helper.WriteFatal(e, "Fatal");
+                Helper.WriteVerbose(e, "Verbose");
+                return View();
+            }
         }
 
         // POST: InventoryController/Delete/5
@@ -108,8 +135,11 @@ namespace StoreMVC.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                Helper.WriteError(e, "Error");
+                Helper.WriteFatal(e, "Fatal");
+                Helper.WriteVerbose(e, "Verbose");
                 return View();
             }
         }

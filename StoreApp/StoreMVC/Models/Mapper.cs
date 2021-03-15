@@ -152,6 +152,7 @@ namespace StoreMVC.Models
                 LocName = location2BCasted.LocName,
                 LocAddress = location2BCasted.LocAddress,
                 LocPhone = location2BCasted.LocPhone,
+                LocId = location2BCasted.Id
             };
         }
 
@@ -254,6 +255,7 @@ namespace StoreMVC.Models
         {
             return new InventoryLineItem
             {
+                InventoryId = inventoryLineItem2BCasted.InventoryId,
                 ProductId = inventoryLineItem2BCasted.ProductId,
                 Quantity = inventoryLineItem2BCasted.Quantity,
             };
@@ -263,12 +265,13 @@ namespace StoreMVC.Models
         {
             return new InvLineItemIndexVM
             {
+                InventoryId = inventoryLineItem2BCasted.InventoryId,
                 ProductId = inventoryLineItem2BCasted.ProductId,
                 ProdName = product.ProdName,
                 ProdPrice = product.ProdPrice,
                 ProdBrandName = product.ProdBrandName,
                 Quantity = inventoryLineItem2BCasted.Quantity,
-                //Id = inventoryLineItem2BCasted.Id
+                Id = inventoryLineItem2BCasted.Id
             };
         }
 
@@ -281,14 +284,28 @@ namespace StoreMVC.Models
             };
         }
 
-        public InvLineItemEditVM cast2InventoryLineItemEditVM(InventoryLineItem inventoryLineItem)
+        public InvLineItemEditVM cast2InventoryLineItemEditVM(InventoryLineItem inventoryLineItem, Product product)
         {
-            throw new NotImplementedException();
+            return new InvLineItemEditVM
+            {
+                InventoryId = inventoryLineItem.InventoryId,
+                ProductId = inventoryLineItem.ProductId,
+                ProdName = product.ProdName,
+                ProdPrice = product.ProdPrice,
+                Quantity = inventoryLineItem.Quantity,
+                Id = inventoryLineItem.Id
+            };
         }
 
         public InventoryLineItem cast2InventoryLineItem(InvLineItemEditVM inventoryLineItem2BCasted)
         {
-            throw new NotImplementedException();
+            return new InventoryLineItem
+            {
+                InventoryId = inventoryLineItem2BCasted.InventoryId,
+                ProductId = inventoryLineItem2BCasted.ProductId,
+                Quantity = inventoryLineItem2BCasted.Quantity,
+                Id = inventoryLineItem2BCasted.Id
+            };
         }
     }
 }

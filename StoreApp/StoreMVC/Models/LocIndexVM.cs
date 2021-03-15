@@ -19,5 +19,7 @@ namespace StoreMVC.Models
         [Required]
         [Phone]
         public string LocPhone { get; set; }
+
+        public int LocId { get; set; }
     }
 }

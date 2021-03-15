@@ -16,11 +16,15 @@ namespace StoreMVC.Controllers
     public class LocationController : Controller
     {
         private ILocationBL _locationBL;
+        private IInventoryLineItemBL _inventoryLineItemBL;
+        private IProductBL _productBL;
         private IMapper _mapper;
 
-        public LocationController(ILocationBL locationBL, IMapper mapper)
+        public LocationController(ILocationBL locationBL, IInventoryLineItemBL inventoryLineItemBL, IProductBL productBL, IMapper mapper)
         {
             _locationBL = locationBL;
+            _inventoryLineItemBL = inventoryLineItemBL;
+            _productBL = productBL;
             _mapper = mapper;
         }
         // GET: LocationController
@@ -135,6 +139,14 @@ namespace StoreMVC.Controllers
                 Helper.WriteVerbose(e, "Verbose");
                 return View();
             }
+        }
+
+        public ActionResult Inventory(int locId)
+        {
+            return View(_inventoryLineItemBL.GetInventoryLineItems()
+                .Where(x => x.InventoryId == locId)
+                .Select(x => _mapper.cast2InventoryLineItemIndexVM(x, _productBL.GetProductById(x.ProductId)))
+                .ToList());
         }
     }
 }

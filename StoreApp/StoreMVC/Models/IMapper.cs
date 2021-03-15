@@ -28,7 +28,7 @@ namespace StoreMVC.Models
         InventoryLineItem cast2InventoryLineItem(InvLineItemCRVM inventoryLineItem2BCasted);
         InvLineItemIndexVM cast2InventoryLineItemIndexVM(InventoryLineItem inventoryLineItem2BCasted, Product product);
         InvLineItemCRVM cast2InventoryLineItemCRVM(InventoryLineItem inventoryLineItem);
-        InvLineItemEditVM cast2InventoryLineItemEditVM(InventoryLineItem inventoryLineItem);
+        InvLineItemEditVM cast2InventoryLineItemEditVM(InventoryLineItem inventoryLineItem, Product product);
         InventoryLineItem cast2InventoryLineItem(InvLineItemEditVM inventoryLineItem2BCasted);
     }
 }

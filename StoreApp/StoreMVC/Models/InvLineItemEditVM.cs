@@ -12,9 +12,19 @@ namespace StoreMVC.Models
         /*[DisplayName("Location")]
         [Required]
         public string LocName { get; set; }*/
+        [DisplayName("Location Id")]
+        [Required]
+        public int InventoryId { get; set; }
         [DisplayName("Product Id")]
         [Required]
         public int ProductId { get; set; }
+        [DisplayName("Name")]
+        [Required]
+        public string ProdName { get; set; }
+        [DisplayName("Price")]
+        [Required]
+        [DataType(DataType.Currency)]
+        public double ProdPrice { get; set; }
         [DisplayName("Quantity")]
         [Required]
         public int Quantity { get; set; }

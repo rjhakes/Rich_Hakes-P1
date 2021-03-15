@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.LocPhone)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocId)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,7 +40,10 @@
                 @Html.DisplayFor(modelItem => item.LocPhone)
             </td>
             <td>
-                @Html.ActionLink("Inventory", "Index", "InventoryLineItem", new { name = item.LocName }) |
+                @Html.DisplayFor(modelItem => item.LocId)
+            </td>
+            <td>
+                @Html.ActionLink("Inventory", "Index", "InventoryLineItem", new { locId = item.LocId }) |
                 @Html.ActionLink("Edit", "Edit", new { name = item.LocName }) |
                 @Html.ActionLink("Details", "Details", new { name = item.LocName }) |
                 @Html.ActionLink("Delete", "Delete", new { name = item.LocName })
