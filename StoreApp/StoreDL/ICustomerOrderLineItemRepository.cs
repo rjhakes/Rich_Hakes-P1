@@ -9,7 +9,7 @@ namespace StoreDL
         CustomerOrderLineItem GetCustomerOrderLineItemById(int id);
         CustomerOrderLineItem GetCustomerOrderLineItemById(int orderId, int prodId);
         CustomerOrderLineItem DeleteCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BDeleted);
-        void UpdateCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BUpdated);
+        CustomerOrderLineItem UpdateCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BUpdated);
         int Ident_Curr();
     }
 }

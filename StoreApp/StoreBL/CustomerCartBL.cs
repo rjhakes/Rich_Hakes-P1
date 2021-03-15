@@ -12,14 +12,14 @@ namespace StoreBL
             _repo = repo;
         }
 
-        public void AddCustomerCart(CustomerCart newCustomerCart)
+        public CustomerCart AddCustomerCart(CustomerCart newCustomerCart)
         {
             //TODO: Add BL
-            _repo.AddCustomerCart(newCustomerCart);
+            return _repo.AddCustomerCart(newCustomerCart);
         }
-        public void DeleteCustomerCart(CustomerCart customerCart2BDeleted)
+        public CustomerCart DeleteCustomerCart(CustomerCart customerCart2BDeleted)
         {
-            _repo.DeleteCustomerCart(customerCart2BDeleted);
+            return _repo.DeleteCustomerCart(customerCart2BDeleted);
         }
         public CustomerCart GetCustomerCartByIds(int customerId, int locId) {
             //todo validate
@@ -30,13 +30,9 @@ namespace StoreBL
             //TODO Add BL
             return _repo.GetCustomerCarts();
         }
-        public void UpdateCustomerCart(CustomerCart customerCart2BUpdated, CustomerCart updatedDetails)
+        public CustomerCart UpdateCustomerCart(CustomerCart customerCart2BUpdated)
         {
-            customerCart2BUpdated.CustId = updatedDetails.CustId;
-            customerCart2BUpdated.LocId = updatedDetails.LocId;
-            customerCart2BUpdated.CurrentItemsId = updatedDetails.CurrentItemsId;
-            
-            _repo.UpdateCustomerCart(customerCart2BUpdated);
+            return _repo.UpdateCustomerCart(customerCart2BUpdated);
         }
 
     }

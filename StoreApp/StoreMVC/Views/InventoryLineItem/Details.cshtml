@@ -1,0 +1,73 @@
+﻿@model StoreMVC.Models.OrderItemVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<h4>OrderItemVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="InventoryId" class="control-label"></label>
+            <input asp-for="InventoryId" class="form-control" />
+            <span asp-validation-for="InventoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProductId" class="control-label"></label>
+            <input asp-for="ProductId" class="form-control" />
+            <span asp-validation-for="ProductId" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="ProdName" class="control-label"></label>
+                <input asp-for="ProdName" class="form-control" disabled="disabled" />
+                <span asp-validation-for="ProdName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProdPrice" class="control-label"></label>
+                <input asp-for="ProdPrice" class="form-control" disabled="disabled" />
+                <span asp-validation-for="ProdPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProdBrandName" class="control-label"></label>
+                <input asp-for="ProdBrandName" class="form-control" disabled="disabled" />
+                <span asp-validation-for="ProdBrandName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" disabled="disabled" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="InventoryId" value=@Model.InventoryId />
+            <input type="hidden" asp-for="ProductId" value=@Model.ProductId />
+            <input type="hidden" asp-for="Id" value=@Model.Id />
+            <div>
+                <p>_______________________________________________________________</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="Id" class="control-label"></label>
+            <input asp-for="Id" class="form-control" />
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>*@
+
+            <div class="form-group">
+                @*<input type="submit" value="Add to Cart" class="btn btn-primary" />*@
+                @Html.ActionLink("Add to Cart", "AddToCart", new { id=Model.Id, amount=Model.Amount  })
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Inventory", "Index", new { locId = Model.InventoryId })
+</div>
+

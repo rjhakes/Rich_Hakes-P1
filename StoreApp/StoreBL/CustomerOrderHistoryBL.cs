@@ -12,14 +12,14 @@ namespace StoreBL
             _repo = repo;
         }
 
-        public void AddCustomerOrderHistory(CustomerOrderHistory newCustomerOrderHistory)
+        public CustomerOrderHistory AddCustomerOrderHistory(CustomerOrderHistory newCustomerOrderHistory)
         {
             //TODO: Add BL
-            _repo.AddCustomerOrderHistory(newCustomerOrderHistory);
+            return _repo.AddCustomerOrderHistory(newCustomerOrderHistory);
         }
-        public void DeleteCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BDeleted)
+        public CustomerOrderHistory DeleteCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BDeleted)
         {
-            _repo.DeleteCustomerOrderHistory(customerOrderHistory2BDeleted);
+            return _repo.DeleteCustomerOrderHistory(customerOrderHistory2BDeleted);
         }
         public CustomerOrderHistory GetCustomerOrderHistoryById(int id) {
             //todo validate
@@ -30,14 +30,9 @@ namespace StoreBL
             //TODO Add BL
             return _repo.GetCustomerOrderHistories();
         }
-        public void UpdateCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BUpdated, CustomerOrderHistory updatedDetails)
+        public CustomerOrderHistory UpdateCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BUpdated)
         {
-            customerOrderHistory2BUpdated.LocId = updatedDetails.LocId;
-            customerOrderHistory2BUpdated.CustId = updatedDetails.CustId;
-            customerOrderHistory2BUpdated.OrderDate = updatedDetails.OrderDate;
-            customerOrderHistory2BUpdated.OrderId = updatedDetails.OrderId;
-            customerOrderHistory2BUpdated.Total = updatedDetails.Total;
-            _repo.UpdateCustomerOrderHistory(customerOrderHistory2BUpdated);
+            return _repo.UpdateCustomerOrderHistory(customerOrderHistory2BUpdated);
         }
     }
 }

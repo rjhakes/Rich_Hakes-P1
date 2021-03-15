@@ -5,9 +5,9 @@ namespace StoreBL
     public interface ICustomerOrderHistoryBL
     {
         List<CustomerOrderHistory> GetCustomerOrderHistories();
-        void AddCustomerOrderHistory(CustomerOrderHistory newCustomerOrderHistory);
+        CustomerOrderHistory AddCustomerOrderHistory(CustomerOrderHistory newCustomerOrderHistory);
         CustomerOrderHistory GetCustomerOrderHistoryById(int id);
-        void DeleteCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BDeleted);
-        void UpdateCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BUpdated, CustomerOrderHistory updatedDetails);
+        CustomerOrderHistory DeleteCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BDeleted);
+        CustomerOrderHistory UpdateCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BUpdated);
     }
 }

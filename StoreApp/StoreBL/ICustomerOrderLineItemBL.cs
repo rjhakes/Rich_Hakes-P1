@@ -5,12 +5,12 @@ namespace StoreBL
     public interface ICustomerOrderLineItemBL
     {
         List<CustomerOrderLineItem> GetCustomerOrderLineItems();
-        void AddCustomerOrderLineItem(CustomerOrderLineItem newCustomerOrderLineItem);
+        CustomerOrderLineItem AddCustomerOrderLineItem(CustomerOrderLineItem newCustomerOrderLineItem);
 
         CustomerOrderLineItem GetCustomerOrderLineItemById(int id);
         CustomerOrderLineItem GetCustomerOrderLineItemById(int orderId, int prodId);
-        void DeleteCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BDeleted);
-        void UpdateCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BUpdated, CustomerOrderLineItem updatedDetails);
+        CustomerOrderLineItem DeleteCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BDeleted);
+        CustomerOrderLineItem UpdateCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BUpdated);
         int Ident_Curr();
     }
 }

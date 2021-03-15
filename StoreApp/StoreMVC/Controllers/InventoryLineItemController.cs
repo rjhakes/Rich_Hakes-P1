@@ -36,9 +36,10 @@ namespace StoreMVC.Controllers
         }
 
         // GET: InventoryController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, int prodId)
         {
-            return View();
+            return View(_mapper
+                .cast2OrderItemVM(_inventoryLineItemBL.GetInventoryLineItemById(id), _productBL.GetProductById(prodId)));
         }
 
         // GET: InventoryController/Create
@@ -142,6 +143,11 @@ namespace StoreMVC.Controllers
                 Helper.WriteVerbose(e, "Verbose");
                 return View();
             }
+        }
+
+        public ActionResult AddToCart()
+        {
+            return View();
         }
     }
 }

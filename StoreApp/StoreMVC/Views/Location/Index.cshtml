@@ -1,4 +1,5 @@
-﻿@model IEnumerable<StoreMVC.Models.LocIndexVM>
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<StoreMVC.Models.LocIndexVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,49 +7,97 @@
 
 <h1>Locations</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LocName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LocAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LocPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LocId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocId)
-            </td>
-            <td>
-                @Html.ActionLink("Inventory", "Index", "InventoryLineItem", new { locId = item.LocId }) |
-                @Html.ActionLink("Edit", "Edit", new { name = item.LocName }) |
-                @Html.ActionLink("Details", "Details", new { name = item.LocName }) |
-                @Html.ActionLink("Delete", "Delete", new { name = item.LocName })
-            </td>
-        </tr>
+@if (Context.Session.GetString("boolManager") == "True")
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocId)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Inventory", "Index", "InventoryLineItem", new { locId = item.LocId }) |
+                        @Html.ActionLink("Edit", "Edit", new { name = item.LocName }) |
+                        @Html.ActionLink("Details", "Details", new { name = item.LocName }) |
+                        @Html.ActionLink("Delete", "Delete", new { name = item.LocName })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else if (Context.Session.GetString("boolManager") == "False")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocPhone)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.LocId)
+                </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocPhone)
+                    </td>
+@*                    <td>
+                        @Html.DisplayFor(modelItem => item.LocId)
+                    </td>*@
+                    <td>
+                        | @Html.ActionLink("Inventory", "Index", "InventoryLineItem", new { locId = item.LocId }) |
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

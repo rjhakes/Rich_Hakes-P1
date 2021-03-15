@@ -8,6 +8,6 @@ namespace StoreDL
         CustomerOrderHistory AddCustomerOrderHistory(CustomerOrderHistory newCustomerOrderHistory);
         CustomerOrderHistory GetCustomerOrderHistoryById(int id);
         CustomerOrderHistory DeleteCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BDeleted);
-        void UpdateCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BUpdated);
+        CustomerOrderHistory UpdateCustomerOrderHistory(CustomerOrderHistory customerOrderHistory2BUpdated);
     }
 }

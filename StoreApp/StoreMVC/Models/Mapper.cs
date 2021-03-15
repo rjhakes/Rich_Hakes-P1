@@ -307,5 +307,28 @@ namespace StoreMVC.Models
                 Id = inventoryLineItem2BCasted.Id
             };
         }
+        public CustomerOrderLineItem cast2OrderLineItem(OrderItemVM orderItem2BCasted)
+        {
+            return new CustomerOrderLineItem
+            {
+                OrderId = 1,
+                ProdId = orderItem2BCasted.ProductId,
+                Quantity = orderItem2BCasted.Amount,
+                ProdPrice = orderItem2BCasted.ProdPrice, 
+            };
+        }
+        public OrderItemVM cast2OrderItemVM(InventoryLineItem inventoryLineItem2BCasted, Product product)
+        {
+            return new OrderItemVM
+            {
+                InventoryId = inventoryLineItem2BCasted.InventoryId,
+                ProductId = inventoryLineItem2BCasted.ProductId,
+                ProdName = product.ProdName,
+                ProdPrice = product.ProdPrice,
+                ProdBrandName = product.ProdBrandName,
+                Quantity = inventoryLineItem2BCasted.Quantity,
+                Id = inventoryLineItem2BCasted.Id
+            };
+        }
     }
 }

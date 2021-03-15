@@ -5,9 +5,9 @@ namespace StoreBL
     public interface ICustomerCartBL
     {
         List<CustomerCart> GetCustomerCarts();
-        void AddCustomerCart(CustomerCart newCustomerCart);
+        CustomerCart AddCustomerCart(CustomerCart newCustomerCart);
         CustomerCart GetCustomerCartByIds(int customerId, int locId);
-        void DeleteCustomerCart(CustomerCart customerCart2BDeleted);
-        void UpdateCustomerCart(CustomerCart customerCart2BUpdated, CustomerCart updatedDetails);
+        CustomerCart DeleteCustomerCart(CustomerCart customerCart2BDeleted);
+        CustomerCart UpdateCustomerCart(CustomerCart customerCart2BUpdated);
     }
 }

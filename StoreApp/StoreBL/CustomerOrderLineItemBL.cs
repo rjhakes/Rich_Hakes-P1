@@ -12,14 +12,14 @@ namespace StoreBL
             _repo = repo;
         }
 
-        public void AddCustomerOrderLineItem(CustomerOrderLineItem newCustomerOrderLineItem)
+        public CustomerOrderLineItem AddCustomerOrderLineItem(CustomerOrderLineItem newCustomerOrderLineItem)
         {
             //TODO: Add BL
-            _repo.AddCustomerOrderLineItem(newCustomerOrderLineItem);
+            return _repo.AddCustomerOrderLineItem(newCustomerOrderLineItem);
         }
-        public void DeleteCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BDeleted)
+        public CustomerOrderLineItem DeleteCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BDeleted)
         {
-            _repo.DeleteCustomerOrderLineItem(customerOrderLineItem2BDeleted);
+            return _repo.DeleteCustomerOrderLineItem(customerOrderLineItem2BDeleted);
         }
 
         public CustomerOrderLineItem GetCustomerOrderLineItemById(int id) {
@@ -35,13 +35,9 @@ namespace StoreBL
             //TODO Add BL
             return _repo.GetCustomerOrderLineItems();
         }
-        public void UpdateCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BUpdated, CustomerOrderLineItem updatedDetails)
+        public CustomerOrderLineItem UpdateCustomerOrderLineItem(CustomerOrderLineItem customerOrderLineItem2BUpdated)
         {
-            customerOrderLineItem2BUpdated.OrderId = updatedDetails.OrderId;
-            customerOrderLineItem2BUpdated.ProdId = updatedDetails.ProdId;
-            customerOrderLineItem2BUpdated.Quantity = updatedDetails.Quantity;
-            customerOrderLineItem2BUpdated.ProdPrice = updatedDetails.ProdPrice;
-            _repo.UpdateCustomerOrderLineItem(customerOrderLineItem2BUpdated);
+            return _repo.UpdateCustomerOrderLineItem(customerOrderLineItem2BUpdated);
         }
 
         public int Ident_Curr()
