@@ -342,14 +342,14 @@ namespace StoreMVC.Models
             };
         }
 
-        public CartIndexVM cast2CartIndexVM(CustomerCart cart2BCasted)
+        public CartIndexVM cast2CartIndexVM(CustomerOrderLineItem coli2BCasted, Product product2BCasted)
         {
             return new CartIndexVM
             {
-                CustId = cart2BCasted.CustId,
-                LocId = cart2BCasted.LocId,
-                CurrentItemsId = cart2BCasted.CurrentItemsId,
-                Id = cart2BCasted.Id
+                ProdName = product2BCasted.ProdName,
+                Quantity = coli2BCasted.Quantity,
+                ProdPrice = product2BCasted.ProdPrice,
+                Total = coli2BCasted.Quantity * product2BCasted.ProdPrice
             };
         }
 

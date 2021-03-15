@@ -40,7 +40,7 @@ namespace StoreMVC.Models
         OrderItemVM cast2OrderItemVM(InventoryLineItem inventoryLineItem2BCasted, Product product);
         //
         CustomerCart cast2Cart(CartCRVM cart2BCasted, int orderID);
-        CartIndexVM cast2CartIndexVM(CustomerCart cart2BCasted);
+        CartIndexVM cast2CartIndexVM(CustomerOrderLineItem coli2BCasted, Product product2BCasted);
         CartCRVM cast2CartCRVM(CustomerCart cart);
         CartEditVM cast2CartEditVM(CustomerCart cart);
         CustomerCart cast2Cart(CartEditVM cart2bCasted, int orderID);

@@ -9,15 +9,20 @@ namespace StoreMVC.Models
 {
     public class CartIndexVM
     {
-        [DisplayName("Customer ID")]
+        [DisplayName("Item")]
         [Required]
-        public int CustId { get; set; }
-        [DisplayName("Location ID")]
+        public string ProdName { get; set; }
+        [DisplayName("Quantity")]
         [Required]
-        public int LocId { get; set; }
-        [DisplayName("Order ID")]
+        public int Quantity { get; set; }
+        [DisplayName("Price per Unit")]
         [Required]
-        public int CurrentItemsId { get; set; }
-        public int Id { get; set; }
+        [DataType(DataType.Currency)]
+        public double ProdPrice { get; set; }
+        [DisplayName("Total")]
+        [Required]
+        [DataType(DataType.Currency)]
+        public double Total { get; set; }
+        //public int Id { get; set; }
     }
 }

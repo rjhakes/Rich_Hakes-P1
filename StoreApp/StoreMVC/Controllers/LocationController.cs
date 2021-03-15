@@ -30,6 +30,7 @@ namespace StoreMVC.Controllers
         // GET: LocationController
         public ActionResult Index()
         {
+            HttpContext.Session.Remove("LocId");
             return View(_locationBL.GetLocations().Select(x => _mapper.cast2LocationIndexVM(x)).ToList());
         }
 
@@ -143,6 +144,7 @@ namespace StoreMVC.Controllers
 
         public ActionResult Inventory(int locId)
         {
+            /*HttpContext.Session.SetInt32("LocId", locId);*/
             return View(_inventoryLineItemBL.GetInventoryLineItems()
                 .Where(x => x.InventoryId == locId)
                 .Select(x => _mapper.cast2InventoryLineItemIndexVM(x, _productBL.GetProductById(x.ProductId)))

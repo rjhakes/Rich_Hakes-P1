@@ -37,6 +37,7 @@ namespace StoreMVC.Controllers
         // GET: InventoryController
         public ActionResult Index(int locId)
         {
+            HttpContext.Session.SetInt32("LocId", locId);
             return View(_inventoryLineItemBL.GetInventoryLineItems()
                 .Where(x => x.InventoryId == locId)
                 .Select(x => _mapper.cast2InventoryLineItemIndexVM(x, _productBL.GetProductById(x.ProductId)))

@@ -22,16 +22,19 @@ namespace StoreMVC.Controllers
         private ICustomerOrderLineItemBL _orderLineItemBL;
         private ICustomerOrderLineItemBL _customerOrderLineItemBL;
         private ILocationBL _locationBL;
+        private IProductBL _productBL;
         private IMapper _mapper;
         
         public CustomerController(ICustomerBL customerBL, ICustomerCartBL cartBL, 
-            ICustomerOrderLineItemBL orderLineItemBL, ICustomerOrderLineItemBL customerOrderLineItemBL, ILocationBL locationBL, IMapper mapper)
+            ICustomerOrderLineItemBL orderLineItemBL, ICustomerOrderLineItemBL customerOrderLineItemBL, ILocationBL locationBL,
+            IProductBL productBL, IMapper mapper)
         {
             _customerBL = customerBL;
             _cartBL = cartBL;
             _orderLineItemBL = orderLineItemBL;
             _customerOrderLineItemBL = customerOrderLineItemBL;
             _locationBL = locationBL;
+            _productBL = productBL;
             _mapper = mapper;
         }
         
@@ -231,7 +234,31 @@ namespace StoreMVC.Controllers
             HttpContext.Session.Remove("UserEmail");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("boolManager");
+            HttpContext.Session.Remove("LocId");
             return Redirect("/");
+        }
+
+        public ActionResult Cart()
+        {
+            if (HttpContext.Session.GetInt32("LocId") != null)
+            {
+                try
+                {
+                    int locId = (int)HttpContext.Session.GetInt32("LocId");
+                    return View(_customerOrderLineItemBL.GetCustomerOrderLineItemById
+                        (_cartBL.GetCustomerCartByIds(_customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")).Id, locId).CurrentItemsId)
+                        .Select(x => _mapper.cast2CartIndexVM(x,
+                            _productBL.GetProductById((int)x.ProdId)
+                        )).ToList());
+                }
+                catch
+                {
+                    return Redirect($"/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
+                }
+                
+            }
+            return Redirect("/");
+            
         }
     }
 }

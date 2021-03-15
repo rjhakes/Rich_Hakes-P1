@@ -197,6 +197,7 @@ namespace StoreMVC.Controllers
             HttpContext.Session.Remove("UserEmail");
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("boolManager");
+            HttpContext.Session.Remove("LocId");
             return Redirect("/");
         }
     }
