@@ -58,10 +58,13 @@
             <input asp-for="Id" class="form-control" />
             <span asp-validation-for="Id" class="text-danger"></span>
         </div>*@
+            <input type="hidden" asp-for="InventoryId" value=@Model.InventoryId />
+            <input type="hidden" asp-for="ProductId" value=@Model.ProductId />
+            <input type="hidden" asp-for="Id" value=@Model.Id />
 
             <div class="form-group">
-                @*<input type="submit" value="Add to Cart" class="btn btn-primary" />*@
-                @Html.ActionLink("Add to Cart", "AddToCart", new { id=Model.Id, amount=Model.Amount  })
+                <input type="submit" value="Add to Cart" class="btn btn-primary" />
+               @* @Html.ActionLink("Add to Cart", "AddToCart", new { id = Model.Id, amount = Model.Amount })*@
             </div>
         </form>
     </div>

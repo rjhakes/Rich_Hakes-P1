@@ -10,6 +10,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 using WebErrorLogging.Utilities;
+using StoreModels;
 
 namespace StoreMVC.Controllers
 {
@@ -17,12 +18,20 @@ namespace StoreMVC.Controllers
     {
         private IInventoryLineItemBL _inventoryLineItemBL;
         private IProductBL _productBL;
+        private ICustomerBL _customerBL;
+        private ICustomerOrderLineItemBL _coliBL;
+        private ICustomerCartBL _cartBL;
         private IMapper _mapper;
 
-        public InventoryLineItemController(IInventoryLineItemBL inventoryLineItemBL, IProductBL productBL, IMapper mapper)
+        public InventoryLineItemController(IInventoryLineItemBL inventoryLineItemBL, IProductBL productBL,
+            ICustomerBL customerBL, ICustomerOrderLineItemBL coliBL, ICustomerCartBL cartBL, IMapper mapper)
         {
             _inventoryLineItemBL = inventoryLineItemBL;
             _productBL = productBL;
+            
+            _customerBL = customerBL;
+            _coliBL = coliBL;
+            _cartBL = cartBL;
             _mapper = mapper;
         }
         // GET: InventoryController
@@ -40,6 +49,61 @@ namespace StoreMVC.Controllers
         {
             return View(_mapper
                 .cast2OrderItemVM(_inventoryLineItemBL.GetInventoryLineItemById(id), _productBL.GetProductById(prodId)));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddToCart(int id, int amount) //(OrderItemVM item, int amount)
+        {
+            /*_executeOrder.AddItemToCart(_customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")),
+                _inventoryLineItemBL.GetInventoryLineItemById(id), amount);*/
+
+            //move to BL
+            bool updateCOLI = false;
+            CustomerOrderLineItem coli = new CustomerOrderLineItem();
+            Customer customer = new Customer();
+            CustomerCart cart = new CustomerCart();
+            customer = _customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail"));
+            cart = _cartBL.GetCustomerCartByIds(customer.Id, _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId);
+
+            coli.OrderId = cart.CurrentItemsId;
+            coli.ProdId = _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId;
+            coli.Quantity = amount;
+            coli.ProdPrice = _productBL.GetProductById(_inventoryLineItemBL.GetInventoryLineItemById(id).ProductId).ProdPrice;
+
+            foreach (var item in _coliBL.GetCustomerOrderLineItemById(cart.CurrentItemsId))
+            {
+                if (item.ProdId == null)
+                {
+                    coli = item;
+                    coli.ProdId = _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId;
+                    coli.Quantity = amount;
+                    coli.ProdPrice = _productBL.GetProductById(_inventoryLineItemBL.GetInventoryLineItemById(id).ProductId).ProdPrice;
+                    updateCOLI = true;
+                    break;
+                }
+                else if (item.ProdId == _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId)
+                {
+                    coli = item;
+                    coli.Quantity += amount;
+                    updateCOLI = true;
+                    break;
+                }
+            }
+            if (updateCOLI)
+            {
+                _coliBL.UpdateCustomerOrderLineItem(coli);
+            }
+            else
+            {
+                _coliBL.AddCustomerOrderLineItem(coli);
+            }
+
+            /*coli = _coliBL.GetCustomerOrderLineItemById(cart.CurrentItemsId);
+            if (coli.ProdId == null)
+            {
+                coli.ProdId = 
+            }*/
+            return RedirectToAction("Index", new { locId = _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId });
         }
 
         // GET: InventoryController/Create
@@ -145,9 +209,6 @@ namespace StoreMVC.Controllers
             }
         }
 
-        public ActionResult AddToCart()
-        {
-            return View();
-        }
+        
     }
 }

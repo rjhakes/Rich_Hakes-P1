@@ -18,11 +18,20 @@ namespace StoreMVC.Controllers
     {
 
         private ICustomerBL _customerBL;
+        private ICustomerCartBL _cartBL;
+        private ICustomerOrderLineItemBL _orderLineItemBL;
+        private ICustomerOrderLineItemBL _customerOrderLineItemBL;
+        private ILocationBL _locationBL;
         private IMapper _mapper;
         
-        public CustomerController(ICustomerBL customerBL, IMapper mapper)
+        public CustomerController(ICustomerBL customerBL, ICustomerCartBL cartBL, 
+            ICustomerOrderLineItemBL orderLineItemBL, ICustomerOrderLineItemBL customerOrderLineItemBL, ILocationBL locationBL, IMapper mapper)
         {
             _customerBL = customerBL;
+            _cartBL = cartBL;
+            _orderLineItemBL = orderLineItemBL;
+            _customerOrderLineItemBL = customerOrderLineItemBL;
+            _locationBL = locationBL;
             _mapper = mapper;
         }
         
@@ -52,7 +61,7 @@ namespace StoreMVC.Controllers
         public ActionResult Create()
         {
             //add view CreateCustomer
-            return View("CreateCustomer");
+            return View("Create");
         }
 
         // POST: CustomerController/Create
@@ -65,9 +74,26 @@ namespace StoreMVC.Controllers
                 try
                 {
                     _customerBL.AddCustomer(_mapper.cast2Customer(newCustomer));
-                    //Helper.WriteInformation($"Customer created-- Email: {newCustomer.CustomerEmail}");
                     Log.Information($"Customer created-- Email: {newCustomer.CustomerEmail}");
-                    return RedirectToAction(nameof(Index));
+
+                    //move this loop to BL
+                    foreach (var loc in _locationBL.GetLocations())
+                    {
+                        CustomerCart cart = new CustomerCart();
+                        cart.CustId = _customerBL.GetCustomerByEmail(newCustomer.CustomerEmail).Id;
+                        cart.LocId = loc.Id;
+                        cart.CurrentItemsId = _orderLineItemBL.Ident_Curr() + 1;
+                        _cartBL.AddCustomerCart(cart);
+                        CustomerOrderLineItem orderLineItem = new CustomerOrderLineItem();
+                        orderLineItem.OrderId = cart.CurrentItemsId;
+                        orderLineItem.ProdId = null;
+                        orderLineItem.Quantity = 0;
+                        orderLineItem.ProdPrice = 0;
+                        _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
+                    }
+                    //Helper.WriteInformation($"Customer created-- Email: {newCustomer.CustomerEmail}");
+                    
+                    return Redirect("/Customer/Login");
                 }
                 catch (Exception e)
                 {

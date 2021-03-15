@@ -26,13 +26,14 @@ namespace StoreDL
             return customerOrderLineItem2BDeleted;
         }
 
-        public CustomerOrderLineItem GetCustomerOrderLineItemById(int id)
+        public List<CustomerOrderLineItem> GetCustomerOrderLineItemById(int id)
         {
             return _context.CustomerOrderLineItems
                 .AsNoTracking()
+                .Where(x => x.OrderId == id)
                 .Select(x => x)
-                .ToList()
-                .FirstOrDefault(x => x.Id == id);
+                .ToList();
+                //.FirstOrDefault(x => x.OrderId == id);
         }
         public CustomerOrderLineItem GetCustomerOrderLineItemById(int orderId, int prodId)
         {
@@ -63,7 +64,7 @@ namespace StoreDL
         public int Ident_Curr()
         {
             //int? intIdt = _context.CustomerOrderLineItems.Max()
-            return _context.CustomerOrderLineItems.Max(x => (int)x.Id);
+            return _context.CustomerOrderLineItems.Max(x => x.Id);
         }
     }
 }

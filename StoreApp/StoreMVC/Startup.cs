@@ -48,6 +48,12 @@ namespace StoreMVC
             services.AddScoped<IProductBL, ProductBL>();
             services.AddScoped<IInventoryLineItemRepository, InventoryLineItemRepoDB>();
             services.AddScoped<IInventoryLineItemBL, InventoryLineItemBL>();
+            services.AddScoped<ICustomerCartRepository, CustomerCartRepoDB>();
+            services.AddScoped<ICustomerCartBL, CustomerCartBL>();
+            services.AddScoped<ICustomerOrderHistoryRepository, CustomerOrderHistoryRepoDB>();
+            services.AddScoped<ICustomerOrderHistoryBL, CustomerOrderHistoryBL>();
+            services.AddScoped<ICustomerOrderLineItemRepository, CustomerOrderLineItemRepoDB>();
+            services.AddScoped<ICustomerOrderLineItemBL, CustomerOrderLineItemBL>();
             services.AddScoped<IMapper, Mapper>();
         }
 

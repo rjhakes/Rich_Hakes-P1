@@ -1,7 +1,7 @@
 ﻿@model StoreMVC.Models.CustomerCRVM
 
 @{
-    ViewData["Title"] = "CreateCustomer";
+    ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
@@ -45,7 +45,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Home", "Index", "/")
+    @*<a asp-action="Index">Back to List</a>*@
 </div>
 
 @section Scripts {

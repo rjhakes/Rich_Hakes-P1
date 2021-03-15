@@ -61,7 +61,7 @@ namespace StoreMVC.Controllers
                     _managerBL.AddManager(_mapper.cast2Manager(newManager));
                     //Helper.WriteInformation($"manager created-- Email: {newmanager.managerEmail}");
                     Log.Information($"Manager created-- Email: {newManager.ManagerEmail}");
-                    return RedirectToAction(nameof(Index));
+                    return Redirect("/Manager/Login");
                 }
                 catch (Exception e)
                 {

@@ -330,5 +330,96 @@ namespace StoreMVC.Models
                 Id = inventoryLineItem2BCasted.Id
             };
         }
+        ///
+        ///
+        public CustomerCart cast2Cart(CartCRVM cart2BCasted, int orderId)
+        {
+            return new CustomerCart
+            {
+                CustId = cart2BCasted.CustId,
+                LocId = cart2BCasted.LocId,
+                CurrentItemsId = orderId
+            };
+        }
+
+        public CartIndexVM cast2CartIndexVM(CustomerCart cart2BCasted)
+        {
+            return new CartIndexVM
+            {
+                CustId = cart2BCasted.CustId,
+                LocId = cart2BCasted.LocId,
+                CurrentItemsId = cart2BCasted.CurrentItemsId,
+                Id = cart2BCasted.Id
+            };
+        }
+
+        public CartCRVM cast2CartCRVM(CustomerCart cart)
+        {
+            return new CartCRVM
+            {
+                CustId = cart.Id,
+                LocId = cart.Id,
+                CurrentItemsId = cart.CurrentItemsId
+            };
+        }
+
+        public CartEditVM cast2CartEditVM(CustomerCart cart)
+        {
+            return new CartEditVM
+            {
+                Id = cart.Id,
+                CurrentItemsId = cart.CurrentItemsId,
+                CustId = cart.CustId,
+                LocId = cart.LocId
+            };
+        }
+
+        public CustomerCart cast2Cart(CartEditVM cart2bCasted, int orderId)
+        {
+            return new CustomerCart
+            {
+                Id = cart2bCasted.Id,
+                CurrentItemsId = orderId,
+                CustId = cart2bCasted.CustId,
+                LocId = cart2bCasted.LocId
+            };
+        }
+
+        public CustomerOrderHistory cast2OrderHistory(OrderHistoryCRVM orderHistory2BCasted)
+        {
+            return new CustomerOrderHistory
+            {
+                LocId = orderHistory2BCasted.LocId,
+                CustId = orderHistory2BCasted.CustId,
+                OrderDate = orderHistory2BCasted.OrderDate,
+                OrderId = orderHistory2BCasted.OrderId,
+                Total = orderHistory2BCasted.Total
+            };
+        }
+
+        public OrderHistoryIndexVM cast2OrderHistoryIndexVM(CustomerOrderHistory orderHistory2BCasted)
+        {
+            return new OrderHistoryIndexVM
+            {
+                LocId = orderHistory2BCasted.LocId,
+                CustId = orderHistory2BCasted.CustId,
+                OrderDate = orderHistory2BCasted.OrderDate,
+                OrderId = orderHistory2BCasted.OrderId,
+                Total = orderHistory2BCasted.Total,
+                Id = orderHistory2BCasted.Id
+            };
+        }
+
+        public OrderHistoryCRVM cast2OrderHistoryCRVM(CustomerOrderHistory orderHistory)
+        {
+            return new OrderHistoryCRVM
+            {
+                LocId = orderHistory.LocId,
+                CustId = orderHistory.CustId,
+                OrderDate = orderHistory.OrderDate,
+                OrderId = orderHistory.OrderId,
+                Total = orderHistory.Total
+            };
+        }
     }
 }

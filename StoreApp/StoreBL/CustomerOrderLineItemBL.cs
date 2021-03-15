@@ -22,7 +22,7 @@ namespace StoreBL
             return _repo.DeleteCustomerOrderLineItem(customerOrderLineItem2BDeleted);
         }
 
-        public CustomerOrderLineItem GetCustomerOrderLineItemById(int id) {
+        public List<CustomerOrderLineItem> GetCustomerOrderLineItemById(int id) {
             //todo validate
             return _repo.GetCustomerOrderLineItemById(id);
         }

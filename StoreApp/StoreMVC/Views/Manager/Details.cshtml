@@ -37,6 +37,7 @@
     </dl>
 </div>
 <div>
+    @Html.ActionLink("Create", "Create", new { email = Model.ManagerEmail }) |
     @Html.ActionLink("Edit", "Edit", new { email = Model.ManagerEmail }) |
     @Html.ActionLink("Logout", "Logout", new { email = Model.ManagerEmail }) |
     <a asp-action="Index">Back to List</a>
