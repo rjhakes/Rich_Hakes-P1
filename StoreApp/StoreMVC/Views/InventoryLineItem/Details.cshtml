@@ -48,11 +48,11 @@
             <div>
                 <p>_______________________________________________________________</p>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Amount" class="control-label"></label>
                 <input asp-for="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
+            </div>*@
             @*<div class="form-group">
             <label asp-for="Id" class="control-label"></label>
             <input asp-for="Id" class="form-control" />
@@ -63,8 +63,12 @@
             <input type="hidden" asp-for="Id" value=@Model.Id />
 
             <div class="form-group">
-                <input type="submit" value="Add to Cart" class="btn btn-primary" />
-               @* @Html.ActionLink("Add to Cart", "AddToCart", new { id = Model.Id, amount = Model.Amount })*@
+                @*<input type="submit" value="Add to Cart" class="btn btn-primary" />*@
+                @if (Model.Quantity > 0)
+                {
+                    @Html.ActionLink("Add to Cart", "AddToCart", new { id = Model.Id, amount = 1 })
+                }
+
             </div>
         </form>
     </div>

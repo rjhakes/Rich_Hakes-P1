@@ -50,60 +50,82 @@ namespace StoreMVC.Controllers
             return View(_mapper
                 .cast2OrderItemVM(_inventoryLineItemBL.GetInventoryLineItemById(id), _productBL.GetProductById(prodId)));
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]*/
         public ActionResult AddToCart(int id, int amount) //(OrderItemVM item, int amount)
         {
             /*_executeOrder.AddItemToCart(_customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")),
                 _inventoryLineItemBL.GetInventoryLineItemById(id), amount);*/
 
             //move to BL
-            bool updateCOLI = false;
-            CustomerOrderLineItem coli = new CustomerOrderLineItem();
-            Customer customer = new Customer();
-            CustomerCart cart = new CustomerCart();
-            customer = _customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail"));
-            cart = _cartBL.GetCustomerCartByIds(customer.Id, _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId);
-
-            coli.OrderId = cart.CurrentItemsId;
-            coli.ProdId = _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId;
-            coli.Quantity = amount;
-            coli.ProdPrice = _productBL.GetProductById(_inventoryLineItemBL.GetInventoryLineItemById(id).ProductId).ProdPrice;
-
-            foreach (var item in _coliBL.GetCustomerOrderLineItemById(cart.CurrentItemsId))
+            try
             {
-                if (item.ProdId == null)
+                if (_inventoryLineItemBL.GetInventoryLineItemById(
+                _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId,
+                _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId).Quantity > 0)
                 {
-                    coli = item;
+                    bool updateCOLI = false;
+                    CustomerOrderLineItem coli = new CustomerOrderLineItem();
+                    Customer customer = new Customer();
+                    CustomerCart cart = new CustomerCart();
+                    customer = _customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail"));
+                    cart = _cartBL.GetCustomerCartByIds(customer.Id, _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId);
+
+                    coli.OrderId = cart.CurrentItemsId;
                     coli.ProdId = _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId;
                     coli.Quantity = amount;
                     coli.ProdPrice = _productBL.GetProductById(_inventoryLineItemBL.GetInventoryLineItemById(id).ProductId).ProdPrice;
-                    updateCOLI = true;
-                    break;
+
+                    foreach (var item in _coliBL.GetCustomerOrderLineItemById(cart.CurrentItemsId))
+                    {
+                        if (item.ProdId == null)
+                        {
+                            coli = item;
+                            coli.ProdId = _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId;
+                            coli.Quantity = amount;
+                            coli.ProdPrice = _productBL.GetProductById(_inventoryLineItemBL.GetInventoryLineItemById(id).ProductId).ProdPrice;
+                            updateCOLI = true;
+                            break;
+                        }
+                        else if (item.ProdId == _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId)
+                        {
+                            coli = item;
+                            coli.Quantity += amount;
+                            updateCOLI = true;
+                            break;
+                        }
+                    }
+                    if (updateCOLI)
+                    {
+                        _coliBL.UpdateCustomerOrderLineItem(coli);
+                    }
+                    else
+                    {
+                        _coliBL.AddCustomerOrderLineItem(coli);
+                    }
+                    InventoryLineItem updateILI = _inventoryLineItemBL.GetInventoryLineItemById(id);
+                    updateILI.Quantity -= 1;
+                    _inventoryLineItemBL.UpdateInventoryLineItem(updateILI);
+                    return RedirectToAction("Index", new { locId = _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId });
                 }
-                else if (item.ProdId == _inventoryLineItemBL.GetInventoryLineItemById(id).ProductId)
+                else
                 {
-                    coli = item;
-                    coli.Quantity += amount;
-                    updateCOLI = true;
-                    break;
+                    return RedirectToAction("Index", new { locId = _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId });
                 }
             }
-            if (updateCOLI)
+            catch (Exception e)
             {
-                _coliBL.UpdateCustomerOrderLineItem(coli);
+                return RedirectToAction("Index", new { locId = _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId });
             }
-            else
-            {
-                _coliBL.AddCustomerOrderLineItem(coli);
-            }
+            
+
 
             /*coli = _coliBL.GetCustomerOrderLineItemById(cart.CurrentItemsId);
             if (coli.ProdId == null)
             {
                 coli.ProdId = 
             }*/
-            return RedirectToAction("Index", new { locId = _inventoryLineItemBL.GetInventoryLineItemById(id).InventoryId });
+            
         }
 
         // GET: InventoryController/Create
