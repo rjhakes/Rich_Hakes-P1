@@ -10,18 +10,19 @@ namespace StoreMVC.Models
     public class OrderHistoryIndexVM
     {
         public int Id { get; set; }
-        [DisplayName("Location ID")]
-        [Required]
-        public int LocId { get; set; }
-        [DisplayName("Customer ID")]
-        [Required]
-        public int CustId { get; set; }
-        [DisplayName("Date")]
-        [Required]
-        public DateTime OrderDate { get; set; }
         [DisplayName("Order ID")]
         [Required]
         public int OrderId { get; set; }
+        [DisplayName("Date")]
+        [Required]
+        public DateTime OrderDate { get; set; }
+        [DisplayName("Location Name")]
+        [Required]
+        public string LocName { get; set; }
+        
+        //public CartIndexVM Cart { get; set; }
+        public int CustId { get; set; }
+        
         [DisplayName("Total")]
         [Required]
         [DataType(DataType.Currency)]

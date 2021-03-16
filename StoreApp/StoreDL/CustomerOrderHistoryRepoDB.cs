@@ -26,13 +26,14 @@ namespace StoreDL
             return customerOrderHistory2BDeleted;
         }
 
-        public CustomerOrderHistory GetCustomerOrderHistoryById(int id)
+        public List<CustomerOrderHistory> GetCustomerOrderHistoryById(int id)
         {
             return _context.CustomerOrderHistories
             .AsNoTracking()
+            .Where(x => x.CustId == id)
             .Select(x => x)
-            .ToList()
-            .FirstOrDefault(x => x.OrderId == id);
+            .ToList();
+            //.FirstOrDefault(x => x.CustId == id);
         }
 
         public List<CustomerOrderHistory> GetCustomerOrderHistories()

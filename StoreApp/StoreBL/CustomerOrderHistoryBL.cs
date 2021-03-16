@@ -21,7 +21,7 @@ namespace StoreBL
         {
             return _repo.DeleteCustomerOrderHistory(customerOrderHistory2BDeleted);
         }
-        public CustomerOrderHistory GetCustomerOrderHistoryById(int id) {
+        public List<CustomerOrderHistory> GetCustomerOrderHistoryById(int id) {
             //todo validate
             return _repo.GetCustomerOrderHistoryById(id);
         }

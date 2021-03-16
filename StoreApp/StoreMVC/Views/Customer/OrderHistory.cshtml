@@ -1,0 +1,61 @@
+﻿@model IEnumerable<StoreMVC.Models.OrderHistoryIndexVM>
+
+@{
+    ViewData["Title"] = "OrderHistory";
+}
+
+<h1>Order History</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocName)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.CustId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.CustId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.ActionLink("Order Details", "OrderDetails", new { id=item.OrderId }) |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

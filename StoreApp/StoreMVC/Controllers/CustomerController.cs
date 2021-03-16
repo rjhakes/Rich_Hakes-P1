@@ -286,5 +286,41 @@ namespace StoreMVC.Controllers
             _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
             return Redirect($"/Location/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
         }
+
+        public ActionResult OrderHistory(string email)
+        {
+
+            return View
+                (
+                _customerOrderHistoryBL.GetCustomerOrderHistoryById
+                    (
+                        _customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")).Id
+                    ).Select
+                        (
+                            x => _mapper.cast2OrderHistoryIndexVM
+                            (
+                                x, 
+                                _locationBL.GetLocationById(x.LocId), 
+                                _customerOrderLineItemBL.GetCustomerOrderLineItemById(x.OrderId).Select
+                                (y => _mapper.cast2CartIndexVM(y,
+                                    _productBL.GetProductById((int)y.ProdId)
+                                )).ToList()
+                            )
+                    ).ToList()
+                
+                );
+        }
+
+        public ActionResult OrderDetails(int id)
+        {
+            return View
+                (
+                    _customerOrderLineItemBL.GetCustomerOrderLineItemById
+                        (id)
+                        .Select(x => _mapper.cast2CartIndexVM(x,
+                            _productBL.GetProductById((int)x.ProdId)
+                        )).ToList()
+                );
+        }
     }
 }

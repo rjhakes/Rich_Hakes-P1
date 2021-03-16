@@ -398,14 +398,16 @@ namespace StoreMVC.Models
             };
         }
 
-        public OrderHistoryIndexVM cast2OrderHistoryIndexVM(CustomerOrderHistory orderHistory2BCasted)
+        public OrderHistoryIndexVM cast2OrderHistoryIndexVM
+            (CustomerOrderHistory orderHistory2BCasted, Location loc, List<CartIndexVM> cart2BCasted)
         {
             return new OrderHistoryIndexVM
             {
-                LocId = orderHistory2BCasted.LocId,
-                CustId = orderHistory2BCasted.CustId,
-                OrderDate = orderHistory2BCasted.OrderDate,
+                
                 OrderId = orderHistory2BCasted.OrderId,
+                OrderDate = orderHistory2BCasted.OrderDate,
+                LocName = loc.LocName,
+                CustId = orderHistory2BCasted.CustId,
                 Total = orderHistory2BCasted.Total,
                 Id = orderHistory2BCasted.Id
             };

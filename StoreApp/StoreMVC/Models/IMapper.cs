@@ -1,4 +1,5 @@
 ﻿using StoreModels;
+using System.Collections.Generic;
 
 namespace StoreMVC.Models
 {
@@ -46,7 +47,7 @@ namespace StoreMVC.Models
         CustomerCart cast2Cart(CartEditVM cart2bCasted, int orderID);
         //
         CustomerOrderHistory cast2OrderHistory(OrderHistoryCRVM orderHistory2BCasted);
-        OrderHistoryIndexVM cast2OrderHistoryIndexVM(CustomerOrderHistory orderHistory2BCasted);
+        OrderHistoryIndexVM cast2OrderHistoryIndexVM(CustomerOrderHistory orderHistory2BCasted, Location loc, List<CartIndexVM> cart2BCasted);
         OrderHistoryCRVM cast2OrderHistoryCRVM(CustomerOrderHistory orderHistory);
         
     }
