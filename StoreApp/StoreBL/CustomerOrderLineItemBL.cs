@@ -26,6 +26,10 @@ namespace StoreBL
             //todo validate
             return _repo.GetCustomerOrderLineItemById(id);
         }
+        public CustomerOrderLineItem GetCustomerOrderLineItem(int id)
+        {
+            return _repo.GetCustomerOrderLineItem(id);
+        }
         public CustomerOrderLineItem GetCustomerOrderLineItemById(int orderId, int prodId) {
             //todo validate
             return _repo.GetCustomerOrderLineItemById(orderId, prodId);

@@ -58,7 +58,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "DeleteItem", new { id=item.Id, prodName=item.ProdName })
             </td>
         </tr>
 
@@ -70,4 +70,7 @@
 <div class="form-group">
     <input type="button" value="Purchase" class="btn btn-primary" onclick="location.href='@Url.Action("Purchase", "Customer", new { itemList = @orderId, total = @totalPrice })'" />
     @*@Html.ActionLink("Purchase", "Purchase", new { itemList = Model })*@
+</div>
+<div>
+    @Html.ActionLink("Back to Inventory", "Index", "InventoryLineItem", new { locId = Context.Session.GetInt32("LocId")})
 </div>

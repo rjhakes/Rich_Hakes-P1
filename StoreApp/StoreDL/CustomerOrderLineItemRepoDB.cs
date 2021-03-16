@@ -35,6 +35,11 @@ namespace StoreDL
                 .ToList();
                 //.FirstOrDefault(x => x.OrderId == id);
         }
+        public CustomerOrderLineItem GetCustomerOrderLineItem(int id)
+        {
+            return _context.CustomerOrderLineItems
+                .FirstOrDefault(x => x.Id == id);
+        }
         public CustomerOrderLineItem GetCustomerOrderLineItemById(int orderId, int prodId)
         {
             return _context.CustomerOrderLineItems

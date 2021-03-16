@@ -24,11 +24,12 @@ namespace StoreMVC.Controllers
         private ILocationBL _locationBL;
         private IProductBL _productBL;
         private ICustomerOrderHistoryBL _customerOrderHistoryBL;
+        private IInventoryLineItemBL _inventoryLineItemBL;
         private IMapper _mapper;
         
         public CustomerController(ICustomerBL customerBL, ICustomerCartBL cartBL, 
             ICustomerOrderLineItemBL orderLineItemBL, ICustomerOrderLineItemBL customerOrderLineItemBL, ILocationBL locationBL,
-            IProductBL productBL, ICustomerOrderHistoryBL customerOrderHistoryBL, IMapper mapper)
+            IProductBL productBL, ICustomerOrderHistoryBL customerOrderHistoryBL, IInventoryLineItemBL inventoryLineItemBL, IMapper mapper)
         {
             _customerBL = customerBL;
             _cartBL = cartBL;
@@ -37,6 +38,7 @@ namespace StoreMVC.Controllers
             _locationBL = locationBL;
             _productBL = productBL;
             _customerOrderHistoryBL = customerOrderHistoryBL;
+            _inventoryLineItemBL = inventoryLineItemBL;
             _mapper = mapper;
         }
         
@@ -284,7 +286,7 @@ namespace StoreMVC.Controllers
             orderLineItem.Quantity = 0;
             orderLineItem.ProdPrice = 0;
             _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
-            return Redirect($"/Location/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
+            return Redirect($"/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
         }
 
         public ActionResult OrderHistory(string email)
@@ -321,6 +323,41 @@ namespace StoreMVC.Controllers
                             _productBL.GetProductById((int)x.ProdId)
                         )).ToList()
                 );
+        }
+
+        public ActionResult DeleteItem(int id, string prodName)
+        {
+            try
+            {
+                InventoryLineItem iLI = _inventoryLineItemBL.GetInventoryLineItemById
+                    ((int)HttpContext.Session.GetInt32("LocId"), (int)_customerOrderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id).ProdId);
+                iLI.Quantity += _customerOrderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id).Quantity;
+                _inventoryLineItemBL.UpdateInventoryLineItem(iLI);
+                _orderLineItemBL.DeleteCustomerOrderLineItem(_customerOrderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id));
+
+                //Log.Information($"Customer deleted-- Email: {email}");
+                return RedirectToAction("Cart");
+            }
+            catch (Exception e)
+            {
+                /*Helper.WriteError(e, "Error");
+                Helper.WriteFatal(e, "Fatal");
+                Helper.WriteVerbose(e, "Verbose");*/
+
+                CustomerCart cart = new CustomerCart();
+                cart.CustId = _customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")).Id;
+                cart.LocId = _locationBL.GetLocationById((int)HttpContext.Session.GetInt32("LocId")).Id;
+                cart.CurrentItemsId = _orderLineItemBL.Ident_Curr() + 1;
+                _cartBL.UpdateCustomerCart(cart);
+                CustomerOrderLineItem orderLineItem = new CustomerOrderLineItem();
+                orderLineItem.OrderId = cart.CurrentItemsId;
+                orderLineItem.ProdId = null;
+                orderLineItem.Quantity = 0;
+                orderLineItem.ProdPrice = 0;
+                _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
+                return Redirect($"/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
+            }
+            //return View();
         }
     }
 }
