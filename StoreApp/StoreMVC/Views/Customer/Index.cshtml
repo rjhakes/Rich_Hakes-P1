@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Customer List</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.CustomerAddress)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { email = item.CustomerEmail }) |
+                @*@Html.ActionLink("Edit", "Edit", new { email = item.CustomerEmail }) |*@
                 @Html.ActionLink("Details", "Details", new { email = item.CustomerEmail }) |
-                @Html.ActionLink("Delete", "Delete", new { email=item.CustomerEmail })
+                @*@Html.ActionLink("Delete", "Delete", new { email=item.CustomerEmail })*@
             </td>
         </tr>
 }

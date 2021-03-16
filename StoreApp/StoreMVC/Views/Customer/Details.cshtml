@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Account Info</h1>
 
 <div>
-    <h4>CustomerCRVM</h4>
+    <h4></h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -44,6 +44,8 @@
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { email = Model.CustomerEmail }) |
+    @Html.ActionLink("Order History", "OrderHistory", new { email = Model.CustomerEmail }) |
     @Html.ActionLink("Logout", "Logout", new { email = Model.CustomerEmail }) |
-    <a asp-action="Index">Back to List</a>
+
+    <a asp-action="Index">Back</a>
 </div>
