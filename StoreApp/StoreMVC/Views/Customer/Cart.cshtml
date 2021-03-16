@@ -1,14 +1,16 @@
-﻿@model IEnumerable<StoreMVC.Models.CartIndexVM>
+﻿@using Microsoft.AspNetCore.Http;
+@model IEnumerable<StoreMVC.Models.CartIndexVM>
 
 @{
     ViewData["Title"] = "Cart";
+    double totalPrice = 0;
+    int orderId = -1;
+
 }
 
 <h1>Cart</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+
 <table class="table">
     <thead>
         <tr>
@@ -24,11 +26,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Total)
             </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProdName)
@@ -42,12 +48,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
+            @{
+                orderId = item.Id;
+                totalPrice += item.Total;
+            }
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
+
+            
+
 }
     </tbody>
 </table>
+<div class="form-group">
+    <input type="button" value="Purchase" class="btn btn-primary" onclick="location.href='@Url.Action("Purchase", "Customer", new { itemList = @orderId, total = @totalPrice })'" />
+    @*@Html.ActionLink("Purchase", "Purchase", new { itemList = Model })*@
+</div>

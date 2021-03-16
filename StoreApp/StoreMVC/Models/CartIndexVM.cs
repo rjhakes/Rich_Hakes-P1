@@ -23,6 +23,6 @@ namespace StoreMVC.Models
         [Required]
         [DataType(DataType.Currency)]
         public double Total { get; set; }
-        //public int Id { get; set; }
+        public int Id { get; set; }
     }
 }

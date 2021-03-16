@@ -23,11 +23,12 @@ namespace StoreMVC.Controllers
         private ICustomerOrderLineItemBL _customerOrderLineItemBL;
         private ILocationBL _locationBL;
         private IProductBL _productBL;
+        private ICustomerOrderHistoryBL _customerOrderHistoryBL;
         private IMapper _mapper;
         
         public CustomerController(ICustomerBL customerBL, ICustomerCartBL cartBL, 
             ICustomerOrderLineItemBL orderLineItemBL, ICustomerOrderLineItemBL customerOrderLineItemBL, ILocationBL locationBL,
-            IProductBL productBL, IMapper mapper)
+            IProductBL productBL, ICustomerOrderHistoryBL customerOrderHistoryBL, IMapper mapper)
         {
             _customerBL = customerBL;
             _cartBL = cartBL;
@@ -35,6 +36,7 @@ namespace StoreMVC.Controllers
             _customerOrderLineItemBL = customerOrderLineItemBL;
             _locationBL = locationBL;
             _productBL = productBL;
+            _customerOrderHistoryBL = customerOrderHistoryBL;
             _mapper = mapper;
         }
         
@@ -259,6 +261,30 @@ namespace StoreMVC.Controllers
             }
             return Redirect("/");
             
+        }
+
+        public ActionResult Purchase(int itemList, double total)
+        {
+            CustomerOrderHistory coh = new CustomerOrderHistory();
+            coh.LocId = (int)HttpContext.Session.GetInt32("LocId");
+            coh.CustId = _customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")).Id;
+            coh.OrderDate = DateTime.Now;
+            coh.OrderId = itemList;
+            coh.Total = total;
+            _customerOrderHistoryBL.AddCustomerOrderHistory(coh);
+            CustomerCart cart = new CustomerCart();
+            /*cart.CustId = coh.CustId;
+            cart.LocId = coh.LocId;*/
+            cart = _cartBL.GetCustomerCartByIds(coh.CustId, coh.LocId);
+            cart.CurrentItemsId = _orderLineItemBL.Ident_Curr() + 1;
+            _cartBL.UpdateCustomerCart(cart);
+            CustomerOrderLineItem orderLineItem = new CustomerOrderLineItem();
+            orderLineItem.OrderId = cart.CurrentItemsId;
+            orderLineItem.ProdId = null;
+            orderLineItem.Quantity = 0;
+            orderLineItem.ProdPrice = 0;
+            _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
+            return Redirect($"/Location/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
         }
     }
 }

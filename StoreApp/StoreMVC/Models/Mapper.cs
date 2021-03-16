@@ -349,7 +349,8 @@ namespace StoreMVC.Models
                 ProdName = product2BCasted.ProdName,
                 Quantity = coli2BCasted.Quantity,
                 ProdPrice = product2BCasted.ProdPrice,
-                Total = coli2BCasted.Quantity * product2BCasted.ProdPrice
+                Total = coli2BCasted.Quantity * product2BCasted.ProdPrice,
+                Id = coli2BCasted.OrderId
             };
         }
 
