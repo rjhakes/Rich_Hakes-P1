@@ -20,7 +20,6 @@ namespace StoreMVC.Controllers
         private ICustomerBL _customerBL;
         private ICustomerCartBL _cartBL;
         private ICustomerOrderLineItemBL _orderLineItemBL;
-        private ICustomerOrderLineItemBL _customerOrderLineItemBL;
         private ILocationBL _locationBL;
         private IProductBL _productBL;
         private ICustomerOrderHistoryBL _customerOrderHistoryBL;
@@ -28,13 +27,12 @@ namespace StoreMVC.Controllers
         private IMapper _mapper;
         
         public CustomerController(ICustomerBL customerBL, ICustomerCartBL cartBL, 
-            ICustomerOrderLineItemBL orderLineItemBL, ICustomerOrderLineItemBL customerOrderLineItemBL, ILocationBL locationBL,
+            ICustomerOrderLineItemBL orderLineItemBL, ILocationBL locationBL,
             IProductBL productBL, ICustomerOrderHistoryBL customerOrderHistoryBL, IInventoryLineItemBL inventoryLineItemBL, IMapper mapper)
         {
             _customerBL = customerBL;
             _cartBL = cartBL;
             _orderLineItemBL = orderLineItemBL;
-            _customerOrderLineItemBL = customerOrderLineItemBL;
             _locationBL = locationBL;
             _productBL = productBL;
             _customerOrderHistoryBL = customerOrderHistoryBL;
@@ -96,7 +94,7 @@ namespace StoreMVC.Controllers
                         orderLineItem.ProdId = null;
                         orderLineItem.Quantity = 0;
                         orderLineItem.ProdPrice = 0;
-                        _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
+                        _orderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
                     }
                     //Helper.WriteInformation($"Customer created-- Email: {newCustomer.CustomerEmail}");
                     
@@ -249,7 +247,7 @@ namespace StoreMVC.Controllers
                 try
                 {
                     int locId = (int)HttpContext.Session.GetInt32("LocId");
-                    return View(_customerOrderLineItemBL.GetCustomerOrderLineItemById
+                    return View(_orderLineItemBL.GetCustomerOrderLineItemById
                         (_cartBL.GetCustomerCartByIds(_customerBL.GetCustomerByEmail(HttpContext.Session.GetString("UserEmail")).Id, locId).CurrentItemsId)
                         .Select(x => _mapper.cast2CartIndexVM(x,
                             _productBL.GetProductById((int)x.ProdId)
@@ -285,7 +283,7 @@ namespace StoreMVC.Controllers
             orderLineItem.ProdId = null;
             orderLineItem.Quantity = 0;
             orderLineItem.ProdPrice = 0;
-            _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
+            _orderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
             return Redirect($"/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
         }
 
@@ -303,7 +301,7 @@ namespace StoreMVC.Controllers
                             (
                                 x, 
                                 _locationBL.GetLocationById(x.LocId), 
-                                _customerOrderLineItemBL.GetCustomerOrderLineItemById(x.OrderId).Select
+                                _orderLineItemBL.GetCustomerOrderLineItemById(x.OrderId).Select
                                 (y => _mapper.cast2CartIndexVM(y,
                                     _productBL.GetProductById((int)y.ProdId)
                                 )).ToList()
@@ -317,7 +315,7 @@ namespace StoreMVC.Controllers
         {
             return View
                 (
-                    _customerOrderLineItemBL.GetCustomerOrderLineItemById
+                    _orderLineItemBL.GetCustomerOrderLineItemById
                         (id)
                         .Select(x => _mapper.cast2CartIndexVM(x,
                             _productBL.GetProductById((int)x.ProdId)
@@ -330,10 +328,10 @@ namespace StoreMVC.Controllers
             try
             {
                 InventoryLineItem iLI = _inventoryLineItemBL.GetInventoryLineItemById
-                    ((int)HttpContext.Session.GetInt32("LocId"), (int)_customerOrderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id).ProdId);
-                iLI.Quantity += _customerOrderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id).Quantity;
+                    ((int)HttpContext.Session.GetInt32("LocId"), (int)_orderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id).ProdId);
+                iLI.Quantity += _orderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id).Quantity;
                 _inventoryLineItemBL.UpdateInventoryLineItem(iLI);
-                _orderLineItemBL.DeleteCustomerOrderLineItem(_customerOrderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id));
+                _orderLineItemBL.DeleteCustomerOrderLineItem(_orderLineItemBL.GetCustomerOrderLineItemById(id, _productBL.GetProductByName(prodName).Id));
 
                 //Log.Information($"Customer deleted-- Email: {email}");
                 return RedirectToAction("Cart");
@@ -354,7 +352,7 @@ namespace StoreMVC.Controllers
                 orderLineItem.ProdId = null;
                 orderLineItem.Quantity = 0;
                 orderLineItem.ProdPrice = 0;
-                _customerOrderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
+                _orderLineItemBL.AddCustomerOrderLineItem(orderLineItem);
                 return Redirect($"/InventoryLineItem?locId={HttpContext.Session.GetInt32("LocId")}");
             }
             //return View();
