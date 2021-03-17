@@ -3,6 +3,90 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Hakes Auto Parts</h1>
+    <h1 class="display-4">Welcome</h1>
     @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
 </div>
+
+<div ng-repeat="eInternship in allInternships  | orderBy : 'displayOrder' " class="ng-scope" style="">
+    <div class="col-xs-12 col-sm-12 col-lg-12 break-inline ckeditor-table-border">
+        <h4 class="intern-exp-head ng-binding">Hakes Auto Parts <a ng-href="" target="_blank" class="project-github github" title=""> <!-- ngIf: eInternship.repoLink --></a></h4>
+        <p ng-bind-html="renderHtml(eInternship.internshipDescripton)" class="ckEditorStyles ng-binding">Hakes Auto Parts is a prototype store web application.  Users can create a customer account, view store inventories, and place orders for our mock items.  Additionally, users can view/edit their account information, and view their order histories.  An admin account can create, update, and delete administrators, locations, products, and inventories.</p>
+        <div class="clear-cus"></div>
+
+        <div ng-hide="eInternship.resposibilities == null || eInternship.resposibilities == ''" class="ckeditor-table-border" aria-hidden="false">
+            <h5 class="profile-protit-head">Links</h5>
+            <p class="word-break-pub-pro ckEditorStyles ng-binding" ng-bind-html="renderHtml(eInternship.resposibilities)">
+                <ul>
+                    <li><a href="https://github.com/rjhakes/Rich_Hakes-P1">Github</a> </li>
+                    <li><a href="https://hakesautoparts.azurewebsites.net">Hakes Auto Parts</a> </li>
+                </ul>
+            </p>
+        </div>
+        <div class="clear-cus"></div>
+    </div>
+    <div class="clear-cus"></div>
+    <hr>
+</div>
+<div id="readme" class="Box md js-code-block-container Box--responsive">
+    <div class="Box-header d-flex flex-items-center flex-justify-between color-bg-primary border-bottom-0">
+        <h2 class="Box-title pr-3">
+            @*README.md*@
+        </h2>
+    </div>
+    <div class="Popover anim-scale-in js-tagsearch-popover" hidden="" data-tagsearch-url="/rjhakes/Rich_Hakes-P1/find-definition" data-tagsearch-ref="main" data-tagsearch-path="README.md" data-tagsearch-lang="Markdown" data-hydro-click="{&quot;event_type&quot;:&quot;code_navigation.click_on_symbol&quot;,&quot;payload&quot;:{&quot;action&quot;:&quot;click_on_symbol&quot;,&quot;repository_id&quot;:344654386,&quot;ref&quot;:&quot;main&quot;,&quot;language&quot;:&quot;Markdown&quot;,&quot;originating_url&quot;:&quot;https://github.com/rjhakes/Rich_Hakes-P1}}" data-hydro-click-hmac="d63089cedef974f29484f2e5abf29d56c65206f59ee8b14c35f3e9de6309dd37">
+        <div class="Popover-message Popover-message--large Popover-message--top-left TagsearchPopover mt-1 mb-4 mx-auto Box color-shadow-large">
+            <div class="TagsearchPopover-content js-tagsearch-popover-content overflow-auto" style="will-change:transform;">
+            </div>
+        </div>
+    </div>
+
+    <div class="Box-body px-5 pb-5">
+        <article class="markdown-body entry-content container-lg" itemprop="text">
+            <h1><a id="user-content-rich_hakes-p1" class="anchor" aria-hidden="true" href="#rich_hakes-p1"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Rich_Hakes-P1</h1>
+            <h2><a id="user-content-requirements" class="anchor" aria-hidden="true" href="#requirements"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Requirements</h2>
+            <h3><a id="user-content-functionality" class="anchor" aria-hidden="true" href="#functionality"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Functionality</h3>
+            <ul class="contains-task-list">
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Add a new customer</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" > Search customers by name</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Display details of an order</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Place orders to store locations for customers</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> View order history of customer</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" > View order history of location</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> View location inventory</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> The customer should be able to purchase multiple products</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" > Order histories should have the option to be sorted by date (latest to oldest and vice versa) or cost (least expensive to most expensive)</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> The manager should be able to replenish inventory</li>
+            </ul>
+            <h3><a id="user-content-additional-requirements" class="anchor" aria-hidden="true" href="#additional-requirements"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Additional Requirements</h3>
+            <ul class="contains-task-list">
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Exception Handling</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Input validation</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Logging (useful ones)</li>
+                <li class="task-list-item">
+                    <input type="checkbox" id=""  class="task-list-item-checkbox"> At least 20 unit tests:
+                    <ul class="contains-task-list">
+                        <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox"> DB methods should be tested</li>
+                    </ul>
+                </li>
+                <li class="task-list-item">
+                    <input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Data should be persisted, (no data should be hard coded)
+                    <ul class="contains-task-list">
+                        <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> You should use PostgreSQL DB</li>
+                        <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Use code first approach to establish a connection to your DB</li>
+                    </ul>
+                </li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> WebApp should be deployed using Azure App Services</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" > A CI/CD pipeline should be established use Azure Pipelines</li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" checked=""> Use ASP.NET MVC for the UI</li>
+                <li class="task-list-item">
+                    <input type="checkbox" id=""  class="task-list-item-checkbox" > DB structure should be 3NF
+                    <ul class="contains-task-list">
+                        <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox" > Should have an ER Diagram</li>
+                    </ul>
+                </li>
+                <li class="task-list-item"><input type="checkbox" id=""  class="task-list-item-checkbox"> Code should have xml documentation</li>
+            </ul>
+        </article>
+    </div>
+</div>
+
