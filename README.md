@@ -40,12 +40,9 @@ create appsettings.json file; include the following replacing "Connection" with 
   
   {
     "ConnectionStrings": {
-    
       "StoreDB": "Connection"
-      
+      }
     }
-    
-  }
   
 Execute the following command lines (any text between "<>" should be replaced, and "<>" symbols removed)  
 - dotnet ef migrations add <migrationName> -c StoreDBContext --startup-project ../StoreMVC
