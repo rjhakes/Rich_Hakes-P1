@@ -35,16 +35,17 @@ To-do list:
 ## Getting Started
    
 git clone https://github.com/rjhakes/Rich_Hakes-P1.git
+
 create appsettings.json file; include the following replacing "Connection" with a proper string to connect to your database
   {
     "ConnectionStrings": {
       "StoreDB": "Connection"
     }
   }
+  
 Execute the following command lines (any text between "<>" should be replaced, and "<>" symbols removed)  
-dotnet ef migrations add <migrationName> -c StoreDBContext --startup-project ../StoreMVC
-dotnet ef database update
-
+- dotnet ef migrations add <migrationName> -c StoreDBContext --startup-project ../StoreMVC
+- dotnet ef database update
 
 ## License
 
